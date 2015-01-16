@@ -1,5 +1,5 @@
 import pygame
-from Main import Grid, CircleRender, CircleMovement
+from Main import Grid, CircleRender, CircleMovement, Detection, CheckPos
 
 
 # Defining colours for the circles, paths(lines) and grid background
@@ -102,6 +102,17 @@ circle_list.add(RedCircle1, RedCircle2, BlueCircle1, BlueCircle2, GreenCircle1, 
 # Grid built here:
 Grid.build_grid()
 
+line_colour = ()
+
+
+
+
+
+
+
+
+
+coordinates = []
 
 ''' *** IN PROGRESS *** '''
 while not done:
@@ -110,8 +121,17 @@ while not done:
             done = True  # Closes the game and exits the loop
             
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            for circle in circle_list:
-                click_movement()
+            CheckPos.check()
+            CircleMovement.click_movement()
+            '''for circle in circle_list:
+                print(Detection.click_detection(circle))
+                if Detection.click_detection(circle) == False:
+                    line_colour = circle.colour
+                click_movement()'''
+        
+            
+                
+
                 
                 
             

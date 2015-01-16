@@ -3,7 +3,7 @@ import pygame
 
 ctr_x_list = []
 ctr_y_list = []
-
+circle_list = []
 
 class grid_circle(pygame.sprite.Sprite):
     # Stationary circles class you need a pair of each colour
@@ -17,9 +17,9 @@ class grid_circle(pygame.sprite.Sprite):
     def render(self):
         # Render method draws circles at the stated position and colour given by the parameters
         pygame.draw.circle(Main.screen, self.colour, (self.ctr_x, self.ctr_y), self.radius, 40)
-        ctr_x_list.append(self.ctr_x)
-        ctr_y_list.append(self.ctr_y)
-        line_colour = self.colour
+        circle_list.append(self.colour)
+        circle_list.append(self.ctr_x)
+        circle_list.append(self.ctr_y)
         
             
 

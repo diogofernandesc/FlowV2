@@ -29,7 +29,7 @@ def build_grid():
         x_grid_interval1[0] += 100
         x_grid_interval2[0] += 100 
             
-        # The above code deals with vertical code - incrementing the x values of the coordinates of the lines
+        # The above code deals with vertical lines - incrementing the x values of the coordinates of the lines
         # Means loop will draw a new line 100 pixels ahead of the previous
             
         pygame.draw.line(screen, White, y_grid_interval1, y_grid_interval2)
