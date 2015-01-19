@@ -1,4 +1,5 @@
 import pygame
+import pygame.gfxdraw
 from Main import Grid, CircleRender, CircleMovement, Detection, CheckPos, GridPosition
 
 
@@ -110,22 +111,24 @@ line_colour = ()
 # Used to determine which circle is being clicked in other modules:
 circle = ()
 
-
-
+global ctr_coordinates
+ctr_coordinates = []
 coordinates = []
 
 # Used for drawing lines when user clicks:
 grid_position = ()
 draw_ctr = ()
 
-def click_movement():
+def click_movement(value1, value2):
     global coordinates
-    GridPosition.pst()
-    
+    mouse_pos = (x,y)
+    coordinates.append(mouse_pos)
+    #aalines(Surface, color, closed, pointlist, blend=1) 
     if len(coordinates) == 2:
-        pygame.draw.lines(screen, line_colour, False, [(coordinates[0]), (coordinates[1])], 10)
-        coordinates = []
-        click_movement()
+        #pygame.draw.lines(screen, line_colour, True, [(coordinates[0]), (coordinates[1])], 30))
+        #pygame.draw.aalines(screen, line_colour, False, [(coordinates[0]),(coordinates[1])], True)
+        #coordinates = []
+        pygame.draw.aalines(screen, line_colour, False, [(value1),(value2)], True)
 
 ''' *** IN PROGRESS *** '''
 while not done:
@@ -135,13 +138,17 @@ while not done:
             
         elif event.type == pygame.MOUSEMOTION:
             state = pygame.mouse.get_pressed()
+            pos = pygame.mouse.get_pos()
+            mouse_x = pos[0]
+            mouse_y = pos[1]
             if state[0] == 1:
-                CheckPos.check()
+                CheckPos.check() # Gets the line colour by checking the position of where the user clicks
                 GridPosition.pst()
                 print(coordinates)
-                click_movement()
+                click_movement(coordinates[0], coordinates[1])
                 print(coordinates)
-            coordinates = []
+                
+                
             
             
             '''for circle in circle_list:
