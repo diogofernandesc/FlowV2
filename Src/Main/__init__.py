@@ -118,7 +118,14 @@ coordinates = []
 grid_position = ()
 draw_ctr = ()
 
-
+def click_movement():
+    global coordinates
+    GridPosition.pst()
+    
+    if len(coordinates) == 2:
+        pygame.draw.lines(screen, line_colour, False, [(coordinates[0]), (coordinates[1])], 10)
+        coordinates = []
+        click_movement()
 
 ''' *** IN PROGRESS *** '''
 while not done:
@@ -126,13 +133,15 @@ while not done:
         if event.type == pygame.QUIT:
             done = True  # Closes the game and exits the loop
             
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            CheckPos.check()
-            GridPosition.pst()
-            print(grid_position)
-            print(draw_ctr)
-            print(coordinates)
-            CircleMovement.click_movement()
+        elif event.type == pygame.MOUSEMOTION:
+            state = pygame.mouse.get_pressed()
+            if state[0] == 1:
+                CheckPos.check()
+                GridPosition.pst()
+                print(coordinates)
+                click_movement()
+                print(coordinates)
+            coordinates = []
             
             
             '''for circle in circle_list:
