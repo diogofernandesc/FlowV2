@@ -1,5 +1,5 @@
 import pygame
-from Main import Grid, CircleRender, CircleMovement, Detection, CheckPos
+from Main import Grid, CircleRender, CircleMovement, Detection, CheckPos, GridPosition
 
 
 # Defining colours for the circles, paths(lines) and grid background
@@ -107,12 +107,18 @@ line_colour = ()
 
 
 
-
-
+# Used to determine which circle is being clicked in other modules:
+circle = ()
 
 
 
 coordinates = []
+
+# Used for drawing lines when user clicks:
+grid_position = ()
+draw_ctr = ()
+
+
 
 ''' *** IN PROGRESS *** '''
 while not done:
@@ -122,7 +128,13 @@ while not done:
             
         elif event.type == pygame.MOUSEBUTTONDOWN:
             CheckPos.check()
+            GridPosition.pst()
+            print(grid_position)
+            print(draw_ctr)
+            print(coordinates)
             CircleMovement.click_movement()
+            
+            
             '''for circle in circle_list:
                 print(Detection.click_detection(circle))
                 if Detection.click_detection(circle) == False:
