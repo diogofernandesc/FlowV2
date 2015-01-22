@@ -24,7 +24,7 @@ def check():
         print("Orange")
         
     elif ((int(mouse_x/100) == 2) and (int(mouse_y/100) == 2)) or ((int(mouse_x/100) == 4) and (int(mouse_y/100) == 4)):
-        #Main.line_colour = Main.Red
+        Main.line_colour = Main.Red
         print("Red")
         
     elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 2)) or ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 3)):

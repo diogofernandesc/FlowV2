@@ -1,7 +1,7 @@
 import pygame
 import pygame.gfxdraw
-from Main import Grid, CircleRender, CircleMovement, Detection, CheckPos, GridPosition
-from Main import Interference
+from Main import Grid, CircleRender, CircleMovement, Detection, CheckPos, GridPosition, Interference, Connection, CheckPosition
+
 
 
 # Defining colours for the circles, paths(lines) and grid background
@@ -112,6 +112,8 @@ clicked_colour = ()
 
 proceed = ()
 
+#Condition variable for checking if circle is being clicked
+clicked = False
 
 # Used to determine which circle is being clicked in other modules:
 circle = ()
@@ -139,11 +141,16 @@ def click_movement(x, y):
         #pygame.draw.aalines(screen, line_colour, False, [(value1),(value2)], True)
         pygame.draw.aalines(screen, line_colour, False, [(coordinates[0]), (coordinates[1])], True)
         coordinates = []
-        
+
+Orange1Clicked = False
+Orange2Clicked = False
         
 ''' *** IN PROGRESS *** '''
 def program_loop():
     global done
+    global Orange1Clicked
+    global Orange2Clicked
+    
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -153,6 +160,15 @@ def program_loop():
                 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 CheckPos.check()
+                # Orange Pair
+                if grid_position == 6:
+                    print(Orange1Clicked)
+                    Orange1Clicked = True 
+    
+                elif grid_position == 28:
+                    print(Orange2Clicked)
+                    Orange2Clicked = True
+
                   
             elif event.type == pygame.MOUSEMOTION:
                 state = pygame.mouse.get_pressed()
@@ -162,15 +178,10 @@ def program_loop():
                 
                 if state[0] == 1:
                     #CheckPos.check() # Gets the line colour by checking the position of where the user clicks
-                    CheckPos.check()
                     GridPosition.pst()
-                    print(coordinates)
                     click_movement(mouse_x, mouse_y)
-                    print(coordinates)
-                    Interference.interfere()
-                    if proceed == False:
-                        break
-                        program_loop()
+                    CheckPosition.pst()
+                    Connection.isConnected()
                     
                 elif state[0] == 0:
                     pygame.event.clear()
