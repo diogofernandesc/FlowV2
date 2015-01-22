@@ -1,6 +1,7 @@
 import pygame
 import pygame.gfxdraw
 from Main import Grid, CircleRender, CircleMovement, Detection, CheckPos, GridPosition
+from Main import Interference
 
 
 # Defining colours for the circles, paths(lines) and grid background
@@ -105,7 +106,11 @@ Grid.build_grid()
 
 line_colour = ()
 
+# Used to evaluate the colour where the user clicks
+clicked_colour = () 
+#Proceed dictates whether the line will be drawn at the next centre of box (100x100)
 
+proceed = ()
 
 
 # Used to determine which circle is being clicked in other modules:
@@ -119,7 +124,9 @@ coordinates = []
 grid_position = ()
 draw_ctr = ()
 
-def click_movement(value1, value2):
+# def click_movement(x, y):
+
+def click_movement(x, y):
     global coordinates
     mouse_pos = (x,y)
     coordinates.append(mouse_pos)
@@ -128,46 +135,59 @@ def click_movement(value1, value2):
         #pygame.draw.lines(screen, line_colour, True, [(coordinates[0]), (coordinates[1])], 30))
         #pygame.draw.aalines(screen, line_colour, False, [(coordinates[0]),(coordinates[1])], True)
         #coordinates = []
-        pygame.draw.aalines(screen, line_colour, False, [(value1),(value2)], True)
-
+        #pygame.draw.aalines(screen, line_colour, False, [(coordinates[0]), (coordinates[1])], True)
+        #pygame.draw.aalines(screen, line_colour, False, [(value1),(value2)], True)
+        pygame.draw.aalines(screen, line_colour, False, [(coordinates[0]), (coordinates[1])], True)
+        coordinates = []
+        
+        
 ''' *** IN PROGRESS *** '''
-while not done:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True  # Closes the game and exits the loop
+def program_loop():
+    global done
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True  # Closes the game and exits the loop
             
-        elif event.type == pygame.MOUSEMOTION:
-            state = pygame.mouse.get_pressed()
-            pos = pygame.mouse.get_pos()
-            mouse_x = pos[0]
-            mouse_y = pos[1]
-            if state[0] == 1:
-                CheckPos.check() # Gets the line colour by checking the position of where the user clicks
-                GridPosition.pst()
-                print(coordinates)
-                click_movement(coordinates[0], coordinates[1])
-                print(coordinates)
+                #carry this on to check condition to be checked later for allowing to mouse to draw anywhere.
                 
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                CheckPos.check()
+                  
+            elif event.type == pygame.MOUSEMOTION:
+                state = pygame.mouse.get_pressed()
+                pos = pygame.mouse.get_pos()
+                mouse_x = pos[0]
+                mouse_y = pos[1]
                 
+                if state[0] == 1:
+                    #CheckPos.check() # Gets the line colour by checking the position of where the user clicks
+                    CheckPos.check()
+                    GridPosition.pst()
+                    print(coordinates)
+                    click_movement(mouse_x, mouse_y)
+                    print(coordinates)
+                    Interference.interfere()
+                    if proceed == False:
+                        break
+                        program_loop()
+                    
+                elif state[0] == 0:
+                    pygame.event.clear()
+                    
+                                
+                
+                '''for circle in circle_list:
+                    print(Detection.click_detection(circle))
+                    if Detection.click_detection(circle) == False:
+                        line_colour = circle.colour
+                    click_movement()'''
             
-            
-            '''for circle in circle_list:
-                print(Detection.click_detection(circle))
-                if Detection.click_detection(circle) == False:
-                    line_colour = circle.colour
-                click_movement()'''
+                                
+        # Update screen with changes
+        pygame.display.flip()
         
-            
-                
-
-                
-                
-            
-        
-                            
-                            
-    # Update screen with changes
-    pygame.display.flip()
+program_loop()
         
         
 # Quit game
