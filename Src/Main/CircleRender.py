@@ -21,8 +21,6 @@ class grid_circle(pygame.sprite.Sprite):
         pygame.gfxdraw.filled_circle(Main.screen, self.ctr_x, self.ctr_y, self.radius, self.colour)
         ctr_x_list.append(self.ctr_x)
         ctr_y_list.append(self.ctr_y)
-        print(ctr_x_list)
-        print(ctr_y_list)
         pygame.gfxdraw.filled_circle(Main.screen, self.ctr_x, self.ctr_y, self.radius, self.colour)
 
             

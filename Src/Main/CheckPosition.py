@@ -12,7 +12,6 @@ def pst():
     elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 0)):
         Main.grid_position = 2
 
-        
     elif ((int(mouse_x/100) == 2) and (int(mouse_y/100) == 0)):
         Main.grid_position = 3
 

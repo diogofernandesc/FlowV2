@@ -1,6 +1,7 @@
 import pygame
 import pygame.gfxdraw
 from Main import Grid, CircleRender, CircleMovement, Detection, CheckPos, GridPosition, Interference, Connection, CheckPosition
+from Main.Connection import YellowLink
 
 
 
@@ -142,14 +143,44 @@ def click_movement(x, y):
         pygame.draw.aalines(screen, line_colour, False, [(coordinates[0]), (coordinates[1])], True)
         coordinates = []
 
+# Condition variables for clicks
 Orange1Clicked = False
 Orange2Clicked = False
-        
+Red1Clicked = False
+Red2Clicked = False
+Yellow1Clicked = False
+Yellow2Clicked = False
+Green1Clicked = False
+Green2Clicked = False
+Blue1Clicked = False
+Blue2Clicked = False
+
+# Condition variables for links
+OrangeLink = False
+RedLink = False
+YellowLink = False
+GreenLink = False
+BlueLink = False
+
 ''' *** IN PROGRESS *** '''
 def program_loop():
     global done
     global Orange1Clicked
-    global Orange2Clicked
+    global Orange2Clicked 
+    global Red1Clicked
+    global Red2Clicked
+    global Yellow1Clicked
+    global Yellow2Clicked
+    global Green1Clicked
+    global Green2Clicked
+    global Blue1Clicked
+    global Blue2Clicked
+    global OrangeLink
+    global RedLink
+    global YellowLink
+    global GreenLink
+    global BlueLink
+    
     
     while not done:
         for event in pygame.event.get():
@@ -160,14 +191,16 @@ def program_loop():
                 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 CheckPos.check()
-                # Orange Pair
+                CheckPosition.pst()
+                Connection.clicked()
+                '''# Orange Pair
                 if grid_position == 6:
                     print(Orange1Clicked)
                     Orange1Clicked = True 
     
                 elif grid_position == 28:
                     print(Orange2Clicked)
-                    Orange2Clicked = True
+                    Orange2Clicked = True'''
 
                   
             elif event.type == pygame.MOUSEMOTION:
@@ -187,12 +220,9 @@ def program_loop():
                     pygame.event.clear()
                     
                                 
-                
-                '''for circle in circle_list:
-                    print(Detection.click_detection(circle))
-                    if Detection.click_detection(circle) == False:
-                        line_colour = circle.colour
-                    click_movement()'''
+            elif ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
+                pygame.quit()
+                    
             
                                 
         # Update screen with changes
