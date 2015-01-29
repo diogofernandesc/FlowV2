@@ -23,7 +23,7 @@ def pst():
         
     elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 0)):
         Main.grid_position = 6
-        Main.line_colour = Main.Orange
+
         
     elif ((int(mouse_x/100) == 0) and (int(mouse_y/100) == 1)):
         Main.grid_position = 7
@@ -52,11 +52,10 @@ def pst():
         
     elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 2)):
         Main.grid_position = 14
-        Main.line_colour = Main.Yellow
+
 
         
     elif ((int(mouse_x/100) == 2) and (int(mouse_y/100) == 2)):
-        Main.line_colour = Main.Red
         Main.grid_position = 15
 
         
@@ -70,7 +69,6 @@ def pst():
     elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 2)):
         Main.grid_position = 18
 
-        
     elif ((int(mouse_x/100) == 0) and (int(mouse_y/100) == 3)):
         Main.grid_position = 19
 
@@ -82,7 +80,7 @@ def pst():
         
     elif ((int(mouse_x/100) == 3) and (int(mouse_y/100) == 3)):
         Main.grid_position = 22
-        Main.line_colour = Main.Green
+
         
     elif ((int(mouse_x/100) == 4) and (int(mouse_y/100) == 3)):
         Main.grid_position = 23

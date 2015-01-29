@@ -1,7 +1,6 @@
 import pygame
 import pygame.gfxdraw
 from Main import Grid, CircleRender, CircleMovement, Detection, CheckPos, GridPosition, Interference, Connection, CheckPosition
-from Main.Connection import YellowLink
 
 
 
@@ -144,26 +143,28 @@ def click_movement(x, y):
         coordinates = []
 
 # Condition variables for clicks
-Orange1Clicked = False
-Orange2Clicked = False
-Red1Clicked = False
-Red2Clicked = False
-Yellow1Clicked = False
-Yellow2Clicked = False
-Green1Clicked = False
-Green2Clicked = False
-Blue1Clicked = False
-Blue2Clicked = False
+Orange1Clicked = 0
+Orange2Clicked = 0
+Red1Clicked = ()
+Red2Clicked = ()
+Yellow1Clicked = ()
+Yellow2Clicked = ()
+Green1Clicked = ()
+Green2Clicked = ()
+Blue1Clicked = ()
+Blue2Clicked = ()
 
 # Condition variables for links
-OrangeLink = False
-RedLink = False
-YellowLink = False
-GreenLink = False
-BlueLink = False
+OrangeLink = 0
+RedLink = ()
+YellowLink = ()
+GreenLink = ()
+BlueLink = ()
+
+
 
 ''' *** IN PROGRESS *** '''
-def program_loop():
+'''def program_loop():
     global done
     global Orange1Clicked
     global Orange2Clicked 
@@ -179,57 +180,49 @@ def program_loop():
     global RedLink
     global YellowLink
     global GreenLink
-    global BlueLink
+    global BlueLink'''
     
-    
-    while not done:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                done = True  # Closes the game and exits the loop
-            
+while not done:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True  # Closes the game and exits the loop
+                
                 #carry this on to check condition to be checked later for allowing to mouse to draw anywhere.
+                    
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            CheckPos.check()
+            CheckPosition.pst()
+            Connection.clicked()
                 
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                CheckPos.check()
-                CheckPosition.pst()
-                Connection.clicked()
-                '''# Orange Pair
-                if grid_position == 6:
-                    print(Orange1Clicked)
-                    Orange1Clicked = True 
     
-                elif grid_position == 28:
-                    print(Orange2Clicked)
-                    Orange2Clicked = True'''
-
-                  
-            elif event.type == pygame.MOUSEMOTION:
-                state = pygame.mouse.get_pressed()
-                pos = pygame.mouse.get_pos()
-                mouse_x = pos[0]
-                mouse_y = pos[1]
-                
-                if state[0] == 1:
-                    #CheckPos.check() # Gets the line colour by checking the position of where the user clicks
-                    GridPosition.pst()
-                    click_movement(mouse_x, mouse_y)
-                    CheckPosition.pst()
-                    Connection.isConnected()
+    
+        elif event.type == pygame.MOUSEMOTION:
+            state = pygame.mouse.get_pressed()
+            pos = pygame.mouse.get_pos()
+            mouse_x = pos[0]
+            mouse_y = pos[1]
                     
-                elif state[0] == 0:
-                    pygame.event.clear()
-                    
-                                
-            elif ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
-                pygame.quit()
-                    
+            if state[0] == 1:
+                #CheckPos.check() # Gets the line colour by checking the position of where the user clicks
+                GridPosition.pst()
+                click_movement(mouse_x, mouse_y)
+                CheckPosition.pst()
+                Connection.isConnected()
+                #Connection.clicked()
+    
             
-                                
+    
+                        
+                                    
+        if ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
+                pygame.quit()
+                        
+                
+                                    
         # Update screen with changes
         pygame.display.flip()
-        
-program_loop()
-        
-        
+            
+#program_loop()
+    
 # Quit game
 pygame.quit()
