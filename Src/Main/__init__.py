@@ -1,7 +1,6 @@
 import pygame
 import pygame.gfxdraw
-from Main import Grid, CircleRender, CircleMovement, Detection, CheckPos, GridPosition, Interference, Connection, CheckPosition
-
+from Main import Grid, CircleRender, CircleMovement, CheckPos, GridPosition, Interference, Connection, CheckPosition
 
 
 # Defining colours for the circles, paths(lines) and grid background
@@ -21,6 +20,10 @@ screen = pygame.display.set_mode(scr_size)
 
 # Loops until the user clicks the close Button
 done = False
+
+# Font + background used to create the popup message when level is complete
+font = pygame.font.Font(None, 36)
+background = pygame.Surface(screen.get_size())
 
 # Fill Screen in black for background
 screen.fill(Black)
@@ -143,24 +146,23 @@ def click_movement(x, y):
         coordinates = []
 
 # Condition variables for clicks
-Orange1Clicked = 0
-Orange2Clicked = 0
-Red1Clicked = ()
-Red2Clicked = ()
-Yellow1Clicked = ()
-Yellow2Clicked = ()
-Green1Clicked = ()
-Green2Clicked = ()
-Blue1Clicked = ()
-Blue2Clicked = ()
+Orange1Clicked = False
+Orange2Clicked = False
+Red1Clicked = False
+Red2Clicked = False
+Yellow1Clicked = False
+Yellow2Clicked = False
+Green1Clicked = False
+Green2Clicked = False
+Blue1Clicked = False
+Blue2Clicked = False
 
 # Condition variables for links
-OrangeLink = 0
-RedLink = ()
-YellowLink = ()
-GreenLink = ()
-BlueLink = ()
-
+OrangeLink = False
+RedLink = False
+YellowLink = False
+GreenLink = False
+BlueLink = False
 
 
 ''' *** IN PROGRESS *** '''
@@ -215,7 +217,13 @@ while not done:
                         
                                     
         if ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
-                pygame.quit()
+            # This will determine what will happen when the level is completed:
+            # At this point a message comes up saying level complete after all have been linked
+            text = font.render("Level Complete", True, White)
+            textpos = text.get_rect(centerx=background.get_width()/2)
+            textpos.top = 300
+            screen.blit(text, textpos)
+            #pygame.quit()
                         
                 
                                     

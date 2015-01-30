@@ -40,6 +40,7 @@ def pst():
     elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 0)):
         pygame.draw.circle(Main.screen, Main.line_colour, (550,50), 5)
         Main.grid_position = 6
+        Main.line_colour = Main.Orange
         Main.draw_ctr = (550,50)
         Main.coordinates.append(Main.draw_ctr)
         
@@ -88,12 +89,14 @@ def pst():
     elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 2)):
         pygame.draw.circle(Main.screen, Main.line_colour, (150,250), 5)
         Main.grid_position = 14
+        Main.line_colour = Main.Yellow
         Main.draw_ctr = (150,250)
         Main.coordinates.append(Main.draw_ctr)
         
     elif ((int(mouse_x/100) == 2) and (int(mouse_y/100) == 2)):
         pygame.draw.circle(Main.screen, Main.line_colour, (250,250), 5)
         Main.grid_position = 15
+        Main.line_colour = Main.Red
         Main.draw_ctr = (250,250)
         Main.coordinates.append(Main.draw_ctr)
         
@@ -136,6 +139,7 @@ def pst():
     elif ((int(mouse_x/100) == 3) and (int(mouse_y/100) == 3)):
         pygame.draw.circle(Main.screen, Main.line_colour, (350,350), 5)
         Main.grid_position = 22
+        Main.line_colour = Main.Green
         Main.draw_ctr = (350,350)
         Main.coordinates.append(Main.draw_ctr)
         
@@ -148,6 +152,7 @@ def pst():
     elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 3)):
         pygame.draw.circle(Main.screen, Main.line_colour, (550,350), 5)
         Main.grid_position = 24
+        Main.line_colour = Main.Yellow
         Main.draw_ctr = (550,350)
         Main.coordinates.append(Main.draw_ctr)
         
@@ -160,6 +165,7 @@ def pst():
     elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 4)):
         pygame.draw.circle(Main.screen, Main.line_colour, (150,450), 5)
         Main.grid_position = 26
+        Main.line_colour = Main.Green
         Main.draw_ctr = (150,450)
         Main.coordinates.append(Main.draw_ctr)
         
@@ -172,18 +178,21 @@ def pst():
     elif ((int(mouse_x/100) == 3) and (int(mouse_y/100) == 4)):
         pygame.draw.circle(Main.screen, Main.line_colour, (350,450), 5)
         Main.grid_position = 28
+        Main.line_colour = Main.Orange
         Main.draw_ctr = (350,450)
         Main.coordinates.append(Main.draw_ctr)
         
     elif ((int(mouse_x/100) == 4) and (int(mouse_y/100) == 4)):
         pygame.draw.circle(Main.screen, Main.line_colour, (450,450), 5)
         Main.grid_position = 29
+        Main.line_colour = Main.Red
         Main.draw_ctr = (450,450)
         Main.coordinates.append(Main.draw_ctr)
     
     elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 4)):
         pygame.draw.circle(Main.screen, Main.line_colour, (550,450), 5)
         Main.grid_position = 30
+        Main.line_colour = Main.Blue
         Main.draw_ctr = (550,450)
         Main.coordinates.append(Main.draw_ctr)
         
@@ -209,6 +218,7 @@ def pst():
     elif ((int(mouse_x/100) == 3) and (int(mouse_y/100) == 5)):
         pygame.draw.circle(Main.screen, Main.line_colour, (350,550), 5)
         Main.grid_position = 34
+        Main.line_colour = Main.Blue
         Main.draw_ctr = (350,550)
         Main.coordinates.append(Main.draw_ctr)
         
