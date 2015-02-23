@@ -1,7 +1,12 @@
 import pygame
 import pygame.gfxdraw
-from Main import Grid, CircleRender, CircleMovement, CheckPos, GridPosition, Interference, Connection, CheckPosition
+import pygame.font
+import time
+from Main import Grid, CircleRender, CircleMovement, CheckPos, GridPosition, Interference, Connection, CheckPosition, MainMenu
 
+'''Include:
+- Crash function, what happens without colour?
+'''
 
 # Defining colours for the circles, paths(lines) and grid background
 
@@ -13,16 +18,48 @@ Yellow = (255, 255, 0)
 Orange = (255, 100, 0)
 Green = (0, 255, 0)
 
+''' MAIN MENU 
+
+# Screen for Main Menu:
+display_width = 600
+display_height = 600
+gameDisplay = pygame.display.set_mode((display_width, display_height))
+pygame.display.set_caption("Flow Main Menu")
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, Black)
+    return textSurface, textSurface.get_rect()
+    
+def game_intro():
+    intro = True
+    
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+                
+        gameDisplay.fill(White)
+        largeText = pygame.font.Font('freensansbold.ttf',115)
+        TextSurf, TextRect = text_objects("FLOW", largeText)
+        TextRect.center = ((display_width/2), (display_height/2))
+        gameDisplay.blit(TextSurf, TextRect)
+        pygame.display.update()'''
+
+
+
 # Setting the grid size through width and height of game window
 pygame.init()
-scr_size = (600, 600)
+display_width = 600
+display_height = 650
+scr_size = (600, 650)
 screen = pygame.display.set_mode(scr_size)
 
 # Loops until the user clicks the close Button
 done = False
 
 # Font + background used to create the popup message when level is complete
-font = pygame.font.Font(None, 36)
+font = pygame.font.Font(None, 100)
 background = pygame.Surface(screen.get_size())
 
 # Fill Screen in black for background
@@ -35,6 +72,7 @@ pygame.display.set_caption("Flow")
 
 # Defining grid positions for circles
 # Array storing different grid positions possible for circles (their center) for both x and y:
+
 '''
 Position in pixels: 
 Position 0: 50
@@ -125,6 +163,9 @@ global ctr_coordinates
 ctr_coordinates = []
 coordinates = []
 
+# Used to check whether box is already in use (coloured in)
+interference_list = []
+
 # Used for drawing lines when user clicks:
 grid_position = ()
 draw_ctr = ()
@@ -135,13 +176,7 @@ def click_movement(x, y):
     global coordinates
     mouse_pos = (x,y)
     coordinates.append(mouse_pos)
-    #aalines(Surface, color, closed, pointlist, blend=1) 
     if len(coordinates) == 2:
-        #pygame.draw.lines(screen, line_colour, True, [(coordinates[0]), (coordinates[1])], 30))
-        #pygame.draw.aalines(screen, line_colour, False, [(coordinates[0]),(coordinates[1])], True)
-        #coordinates = []
-        #pygame.draw.aalines(screen, line_colour, False, [(coordinates[0]), (coordinates[1])], True)
-        #pygame.draw.aalines(screen, line_colour, False, [(value1),(value2)], True)
         pygame.draw.aalines(screen, line_colour, False, [(coordinates[0]), (coordinates[1])], True)
         coordinates = []
 
@@ -165,72 +200,87 @@ GreenLink = False
 BlueLink = False
 
 
-''' *** IN PROGRESS *** '''
-'''def program_loop():
-    global done
-    global Orange1Clicked
-    global Orange2Clicked 
-    global Red1Clicked
-    global Red2Clicked
-    global Yellow1Clicked
-    global Yellow2Clicked
-    global Green1Clicked
-    global Green2Clicked
-    global Blue1Clicked
-    global Blue2Clicked
-    global OrangeLink
-    global RedLink
-    global YellowLink
-    global GreenLink
-    global BlueLink'''
+def message_display(text):
+    largeText = pygame.font.Font('freesansbold.ttf', 115)
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = ((display_width/2),(display_height/2))
+    screen.blit(TextSurf, TextRect)
+    pygame.display.update()
+    time.sleep(2)
+    game_loop()
+
+def crash():
+    message_display("You Crashed")
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, Black)
+    return textSurface, textSurface.get_rect() 
+
+def game_intro():
+    pygame.display.set_caption("Flow Main Menu")
+    intro = True
     
-while not done:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True  # Closes the game and exits the loop
-                
-                #carry this on to check condition to be checked later for allowing to mouse to draw anywhere.
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+    
+        screen.fill(White)
+        largeText = pygame.font.Font('freensansbold.TTF', 115)
+        TextSurf, TextRect = text_objects("Flow", largeText)
+        TextRect.center = ((display_width/2),(display_height/2))
+        screen.blit(TextSurf, TextRect)
+        pygame.display.update()
+        
+        
+def game_loop():
+    done = False
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_x = mouse_pos[0]
+    mouse_y = mouse_pos[1]
+    
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True  # Closes the game and exits the loop
                     
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            CheckPos.check()
-            CheckPosition.pst()
-            Connection.clicked()
-                
-    
-    
-        elif event.type == pygame.MOUSEMOTION:
-            state = pygame.mouse.get_pressed()
-            pos = pygame.mouse.get_pos()
-            mouse_x = pos[0]
-            mouse_y = pos[1]
-                    
-            if state[0] == 1:
-                #CheckPos.check() # Gets the line colour by checking the position of where the user clicks
-                GridPosition.pst()
-                click_movement(mouse_x, mouse_y)
+                    #carry this on to check condition to be checked later for allowing to mouse to draw anywhere.
+                        
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                CheckPos.check()
                 CheckPosition.pst()
-                Connection.isConnected()
-                #Connection.clicked()
-    
-            
-    
+                Connection.clicked()
+                    
+            elif event.type == pygame.MOUSEMOTION:
+                state = pygame.mouse.get_pressed()
+                pos = pygame.mouse.get_pos()
+                mouse_x = pos[0]
+                mouse_y = pos[1]
+                print(mouse_x, mouse_y)
                         
-                                    
-        if ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
-            # This will determine what will happen when the level is completed:
-            # At this point a message comes up saying level complete after all have been linked
-            text = font.render("Level Complete", True, White)
-            textpos = text.get_rect(centerx=background.get_width()/2)
-            textpos.top = 300
-            screen.blit(text, textpos)
-            #pygame.quit()
-                        
-                
-                                    
-        # Update screen with changes
-        pygame.display.flip()
+                if state[0] == 1:
+                    #CheckPos.check() # Gets the line colour by checking the position of where the user clicks
+                    GridPosition.pst()
+                    click_movement(mouse_x, mouse_y)
+                    CheckPosition.pst()
+                    Connection.isConnected()
+                            
+            if ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
+                # This will determine what will happen when the level is completed:
+                # At this point a message comes up saying level complete after all have been linked
+                text = font.render("Level Complete", True, White)
+                textpos = text.get_rect(centerx=background.get_width()/2)
+                textpos.top = 250
+                screen.blit(text, textpos)
+                #pygame.quit()
+                            
+                    
+                                        
+            # Update screen with changes
+            pygame.display.flip()
             
-#program_loop()
+game_intro()     
+game_loop()
     
 # Quit game
 pygame.quit()

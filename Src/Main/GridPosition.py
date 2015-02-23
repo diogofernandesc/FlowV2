@@ -9,7 +9,7 @@ def pst():
     if ((int(mouse_x/100) == 0) and (int(mouse_y/100) == 0)):
         pygame.draw.circle(Main.screen, Main.line_colour, (50,50), 5)
         Main.grid_position = 1
-        Main.draw_ctr = [50,50]
+        Main.draw_ctr = (50,50)
         Main.coordinates.append(Main.draw_ctr)
         
     elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 0)):

@@ -4,9 +4,11 @@ from Main import CheckPosition
 
 
 
-''' IN PROGRESS '''
+''' IN PROGRESS'''
 
+    
 def clicked():
+    
     global Orange1Clicked
     global Orange2Clicked 
     global Red1Clicked
@@ -94,7 +96,7 @@ def isConnected():
         # position of other circle
         if Main.grid_position == 28:
             print("link complete for Orange!")
-            Main.OrangeLink = True
+            Main.OrangeLink = True#
 
             
             
