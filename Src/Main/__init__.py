@@ -1,22 +1,26 @@
-import pygame
-import pygame.gfxdraw
-import pygame.font
-import time
-from Main import Grid, CircleRender, CircleMovement, CheckPos, GridPosition, Interference, Connection, CheckPosition, MainMenu
-
 '''Include:
 - Crash function, what happens without colour?
 '''
-
 # Defining colours for the circles, paths(lines) and grid background
+
+import pygame
+import pygame.font
+import pygame.gfxdraw
+import time
+
+from Main import Grid, CircleRender, CircleMovement, CheckPos, GridPosition, Connection, CheckPosition, MainMenu
+
 
 Black = (0 , 0, 0)
 White = (255, 255, 255)
 Blue = (0 , 0, 255)
+DarkBlue = (0, 0, 200)
 Red = (255, 0, 0)
+DarkRed = (200,0,0)
 Yellow = (255, 255, 0)
 Orange = (255, 100, 0)
 Green = (0, 255, 0)
+DarkGreen = (0, 200, 0)
 
 ''' MAIN MENU 
 
@@ -52,7 +56,7 @@ def game_intro():
 pygame.init()
 display_width = 600
 display_height = 650
-scr_size = (600, 650)
+scr_size = (600, 800)
 screen = pygame.display.set_mode(scr_size)
 
 # Loops until the user clicks the close Button
@@ -199,9 +203,8 @@ YellowLink = False
 GreenLink = False
 BlueLink = False
 
-
 def message_display(text):
-    largeText = pygame.font.Font('freesansbold.ttf', 115)
+    largeText = pygame.font.Font('freensansbold.ttf', 115)
     TextSurf, TextRect = text_objects(text, largeText)
     TextRect.center = ((display_width/2),(display_height/2))
     screen.blit(TextSurf, TextRect)
@@ -216,7 +219,43 @@ def text_objects(text, font):
     textSurface = font.render(text, True, Black)
     return textSurface, textSurface.get_rect() 
 
+def button(msg, button_x, button_y, button_w, button_h, icolour, acolour,action= None): # ( icolour = inactive colour & acolour = active colour) ( Width is 200) (height 100)
+    
+    pos = pygame.mouse.get_pos()
+    mouse_x = pos[0]
+    mouse_y = pos[1]
+    click = pygame.mouse.get_pressed()
+    
+    
+    #Buttons:
+    if button_x+button_w > mouse_x > button_x and button_y+button_h > mouse_y > button_y:
+        pygame.draw.rect(screen, acolour, (button_x,button_y,button_w,button_h))
+        if click[0] == 1 and action!= None:
+            if action == "play":
+                game_loop()
+            
+            elif action == "instructions":
+                print("Instructions are:")
+                
+            elif action == "quit":
+                pygame.quit()
+                quit()
+    else:
+        pygame.draw.rect(screen, icolour, (button_x,button_y,button_w,button_h))
+    
+    smallText = pygame.font.Font("freesansbold.ttf", 30)
+    textSurf, textRect = text_objects(msg, smallText)
+    textRect.center = ((button_x+(button_w/2),(button_y+(100/2))))
+    screen.blit(textSurf, textRect)
+    
+
+    
+
+
+
 def game_intro():
+    display_width = 600
+    display_height = 600
     pygame.display.set_caption("Flow Main Menu")
     intro = True
     
@@ -226,11 +265,19 @@ def game_intro():
                 pygame.quit()
     
         screen.fill(White)
-        largeText = pygame.font.Font('freensansbold.TTF', 115)
+        largeText = pygame.font.Font('freesansbold.ttf', 150)
         TextSurf, TextRect = text_objects("Flow", largeText)
-        TextRect.center = ((display_width/2),(display_height/2))
+        TextRect.center = ((display_width/2),(display_height*0.25))
         screen.blit(TextSurf, TextRect)
+        
+        button("Play", 200,300,200,100, DarkGreen, Green, "play")
+        button("Instructions",200,450,200,100, DarkBlue, Blue, "instructions")
+        button("Quit",200,600,200,100, DarkRed, Red, "quit")
+        
+        
         pygame.display.update()
+        
+        
         
         
 def game_loop():

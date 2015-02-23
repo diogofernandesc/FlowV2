@@ -30,7 +30,9 @@ def game_intro():
         
 import pygame
 import time
+
 import Main
+
 
 pygame.init()
 

@@ -1,5 +1,6 @@
 import pygame
 
+
 scr_size = (600, 600)
 screen = pygame.display.set_mode(scr_size)
 White = (255, 255, 255)
@@ -17,7 +18,7 @@ def build_grid():
     y_grid_interval2 = [600, 100]
         
     i = 0  # Initiating control variable for the loop
-    while i != 5:
+    while i != 6:
         ''' ***Very important***:
         - This while loop is used to control the intervals in which the lines are drawn for the grid
         - 600x600 grid so divided by 6 gives 100px intervals

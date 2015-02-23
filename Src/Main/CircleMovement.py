@@ -1,6 +1,3 @@
-import pygame
-import Main
-
 '''
 def choose_circle():
     pos = pygame.mouse.get_pos()
@@ -25,7 +22,12 @@ def choose_circle():
     if circle == "Orange":
         print("hello")
 '''   
-    
+
+import pygame
+
+import Main
+
+
 def click_movement():
     global coordinates
     pos = pygame.mouse.get_pos()

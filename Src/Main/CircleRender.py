@@ -1,6 +1,8 @@
-import Main
 import pygame
 import pygame.gfxdraw
+
+import Main
+
 
 ctr_x_list = []
 ctr_y_list = []

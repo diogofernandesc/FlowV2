@@ -1,5 +1,7 @@
 import pygame
+
 import Main
+
 
 def pst():
     pos = pygame.mouse.get_pos()

@@ -1,12 +1,11 @@
-import pygame
-import Main
-from Main import CheckPosition
-
-
-
 ''' IN PROGRESS'''
 
-    
+import pygame
+
+from Main import CheckPosition
+import Main
+
+
 def clicked():
     
     global Orange1Clicked
