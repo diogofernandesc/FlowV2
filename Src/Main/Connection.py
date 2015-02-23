@@ -95,7 +95,7 @@ def isConnected():
         # position of other circle
         if Main.grid_position == 28:
             print("link complete for Orange!")
-            Main.OrangeLink = True#
+            Main.OrangeLink = True
 
             
             
