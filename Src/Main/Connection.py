@@ -24,7 +24,7 @@ def clicked():
     global GreenLink
     global BlueLink
     CheckPosition.pst()
-    print(Main.grid_position)
+
     
     # Orange Pair
     if Main.grid_position == 6:

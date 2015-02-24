@@ -1,5 +1,9 @@
 '''Include:
 - Crash function, what happens without colour?
+- Counter for resets
+- Countdown
+- Tidy up functions
+
 '''
 # Defining colours for the circles, paths(lines) and grid background
 
@@ -14,48 +18,22 @@ from Main import Grid, CircleRender, CircleMovement, CheckPos, GridPosition, Con
 Black = (0 , 0, 0)
 White = (255, 255, 255)
 Blue = (0 , 0, 255)
-DarkBlue = (0, 0, 200)
+DarkBlue = (0, 0, 180)
 Red = (255, 0, 0)
 DarkRed = (200,0,0)
 Yellow = (255, 255, 0)
+DarkYellow = (225, 200, 0)
 Orange = (255, 100, 0)
 Green = (0, 255, 0)
 DarkGreen = (0, 200, 0)
-
-''' MAIN MENU 
-
-# Screen for Main Menu:
-display_width = 600
-display_height = 600
-gameDisplay = pygame.display.set_mode((display_width, display_height))
-pygame.display.set_caption("Flow Main Menu")
-
-def text_objects(text, font):
-    textSurface = font.render(text, True, Black)
-    return textSurface, textSurface.get_rect()
-    
-def game_intro():
-    intro = True
-    
-    while intro:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-                
-        gameDisplay.fill(White)
-        largeText = pygame.font.Font('freensansbold.ttf',115)
-        TextSurf, TextRect = text_objects("FLOW", largeText)
-        TextRect.center = ((display_width/2), (display_height/2))
-        gameDisplay.blit(TextSurf, TextRect)
-        pygame.display.update()'''
+Grey = (122, 122, 122)
 
 
 
 # Setting the grid size through width and height of game window
 pygame.init()
 display_width = 600
-display_height = 650
+display_height = 800
 scr_size = (600, 800)
 screen = pygame.display.set_mode(scr_size)
 
@@ -68,6 +46,12 @@ background = pygame.Surface(screen.get_size())
 
 # Defining grid positions for circles
 # Array storing different grid positions possible for circles (their center) for both x and y:
+
+pos = pygame.mouse.get_pos()
+mouse_x = pos[0]
+mouse_y = pos[1]
+
+nresets = 3
 
 '''
 Position in pixels: 
@@ -166,7 +150,8 @@ interference_list = []
 grid_position = ()
 draw_ctr = ()
 
-# def click_movement(x, y):
+
+
 
 def click_movement(x, y):
     global coordinates
@@ -217,7 +202,9 @@ def text_objects(text, font):
     textSurface = font.render(text, True, Black)
     return textSurface, textSurface.get_rect() 
 
-def button(msg, button_x, button_y, button_w, button_h, icolour, acolour,action= None): # ( icolour = inactive colour & acolour = active colour) ( Width is 200) (height 100)
+def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsize, action= None):
+    global nresets
+    # ( icolour = inactive colour & acolour = active colour) ( Width is 200) (height 100)
     
     pos = pygame.mouse.get_pos()
     mouse_x = pos[0]
@@ -238,14 +225,44 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour,action=
             elif action == "quit":
                 pygame.quit()
                 quit()
+                
+            elif action == "main menu":
+                game_intro()
+                
+            elif action == "reset":
+                if nresets == -1:
+                    reset_font = pygame.font.SysFont(None, 25)
+                    reset_text = reset_font.render("No more resets available", True, Red)
+                    screen.blit(reset_text,(0,625))
+                else:
+                    game_loop()
+                
+                
+                
     else:
         pygame.draw.rect(screen, icolour, (button_x,button_y,button_w,button_h))
     
-    smallText = pygame.font.Font("freesansbold.ttf", 30)
+    smallText = pygame.font.Font("freesansbold.ttf", fontsize)
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ((button_x+(button_w/2),(button_y+(100/2))))
     screen.blit(textSurf, textRect)
-    
+  
+
+
+                
+                
+                
+def reset_counter(nresets):
+    if nresets >= 0:
+        reset_font = pygame.font.SysFont(None, 25)
+        reset_text = reset_font.render("Resets available: "+str(nresets), True, White)
+        screen.blit(reset_text,(0,605))
+    else:
+        reset_font = pygame.font.SysFont(None, 25)
+        reset_text = reset_font.render("Resets available: "+str(0), True, White)
+        screen.blit(reset_text,(0,605))
+        
+        
 
 def instruction_menu():
     pygame.display.set_caption("Flow Instructions")
@@ -255,16 +272,17 @@ def instruction_menu():
             if event.type == pygame.QUIT:
                 pygame.quit()
         
-        screen.fill(White)
+        screen.fill(Grey)
         text("Instructions", 300, 100, 70)
         text("The objective of flow is to connect all the circle pairs together of the same colour:",300,200,15)
         text("1. Click a circle to choose that colour", 300, 300, 15)
         text("2. Click and drag from chosen circle to colour partner to complete link", 300, 350, 15)
         text("3. Try to complete the links before the timer runs out",300,400, 15)
-        text("4. Enjoy yourself!", 300,450, 15)
+        text("4. You can only reset the level a maximum of 3 times",300, 450, 15)
+        text("5. Enjoy yourself!", 300,500, 15)
         
-        button("Play", 50,600,200,100, DarkGreen, Green, "play")
-        button("Quit",350,600,200,100, DarkRed, Red, "quit")
+        button("Play", 50,600,200,100, DarkGreen, Green,30, "play")
+        button("Quit",350,600,200,100, DarkRed, Red,30, "quit")
         
         pygame.display.update()
 
@@ -279,23 +297,27 @@ def game_intro():
             if event.type == pygame.QUIT:
                 pygame.quit()
     
-        screen.fill(White)
+        screen.fill(Yellow)
         largeText = pygame.font.Font('freesansbold.ttf', 150)
         TextSurf, TextRect = text_objects("Flow", largeText)
         TextRect.center = ((display_width/2),(display_height*0.25))
         screen.blit(TextSurf, TextRect)
         
-        button("Play", 200,300,200,100, DarkGreen, Green, "play")
-        button("Instructions",200,450,200,100, DarkBlue, Blue, "instructions")
-        button("Quit",200,600,200,100, DarkRed, Red, "quit")
+        button("Play", 200,300,200,100, DarkGreen, Green,30, "play")
+        button("Instructions",200,450,200,100, DarkBlue, Blue, 30, "instructions")
+        button("Quit",200,600,200,100, DarkRed, Red, 30, "quit")
         
         
         pygame.display.update()
         
-        
+
         
         
 def game_loop():
+    global mouse_x
+    global mouse_y
+    global nresets
+
     # Naming the caption of the window opened for the Game
     pygame.display.set_caption("Flow")
     
@@ -345,48 +367,18 @@ def game_loop():
     circle_list.add(RedCircle1, RedCircle2, BlueCircle1, BlueCircle2, GreenCircle1, GreenCircle2, OrangeCircle1, OrangeCircle2, YellowCircle1, YellowCircle2)
     
     
-    
     # Grid built here:
     Grid.build_grid()
+
+    reset_counter(nresets)
     
     line_colour = ()
-    '''
-    # Used to evaluate the colour where the user clicks
-    clicked_colour = () 
-    #Proceed dictates whether the line will be drawn at the next centre of box (100x100)
-    
-    proceed = ()
-    
-    #Condition variable for checking if circle is being clicked
-    clicked = False
-    
-    # Used to determine which circle is being clicked in other modules:
-    circle = ()'''
+
     
     global ctr_coordinates
     ctr_coordinates = []
     coordinates = []
-    '''   
-    # Used to check whether box is already in use (coloured in)
-    interference_list = []
-    
-    # Used for drawing lines when user clicks:
-    grid_position = ()
-    draw_ctr = ()
-    
-    
-    
-    # Condition variables for clicks
-    Orange1Clicked = False
-    Orange2Clicked = False
-    Red1Clicked = False
-    Red2Clicked = False
-    Yellow1Clicked = False
-    Yellow2Clicked = False
-    Green1Clicked = False
-    Green2Clicked = False
-    Blue1Clicked = False
-    Blue2Clicked = False'''
+
     
     # Condition variables for links
     OrangeLink = False
@@ -396,12 +388,11 @@ def game_loop():
     BlueLink = False
     
     
-    
-    
     done = False
     mouse_pos = pygame.mouse.get_pos()
     mouse_x = mouse_pos[0]
     mouse_y = mouse_pos[1]
+    
     
     while not done:
         for event in pygame.event.get():
@@ -414,7 +405,14 @@ def game_loop():
                 CheckPos.check()
                 CheckPosition.pst()
                 Connection.clicked()
-                    
+                if 50+200 > mouse_x > 50 and 650+100 > mouse_y > 650:
+                    if nresets == -1:
+                        reset_counter(nresets)
+                        
+                    else:
+                        nresets = nresets - 1
+                        reset_counter(nresets)
+                
             elif event.type == pygame.MOUSEMOTION:
                 state = pygame.mouse.get_pressed()
                 pos = pygame.mouse.get_pos()
@@ -424,7 +422,7 @@ def game_loop():
                 if state[0] == 1:
                     #CheckPos.check() # Gets the line colour by checking the position of where the user clicks
                     GridPosition.pst()
-                    click_movement(mouse_x, mouse_y)
+                    #click_movement(mouse_x, mouse_y)
                     CheckPosition.pst()
                     Connection.isConnected()
                             
@@ -436,14 +434,15 @@ def game_loop():
                 textpos.top = 250
                 screen.blit(text, textpos)
                 #pygame.quit()
-                            
-                    
-                                        
-            # Update screen with changes
-            pygame.display.flip()
+        
+              
+        button("Reset Paths", 25,650,150,100, DarkBlue, Blue, 20, "reset")                  
+        button("Main menu", 225,650,150,100, DarkGreen, Green, 20, "main menu")
+        button("Quit game", 425,650,150,100, DarkRed, Red, 20, "quit")                       
+        # Update screen with changes
+        pygame.display.flip()
             
-game_intro()     
-game_loop()
+game_intro()
     
 # Quit game
 pygame.quit()

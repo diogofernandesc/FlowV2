@@ -1,239 +1,79 @@
 import pygame
 
 import Main
+from Main.CircleRender import grid_circle
 
-
+def grid_moving_circle(gridn_x, gridn_y, cctr_x, cctr_y, gridn):
+    pos = pygame.mouse.get_pos()
+    mouse_x = pos[0]
+    mouse_y = pos[1]
+    if ((int(mouse_x/100) == gridn_x) and (int(mouse_y/100) == gridn_y)): 
+        pygame.draw.circle(Main.screen, Main.line_colour, (cctr_x, cctr_y), 30)
+        Main.grid_position = gridn
+        Main.draw_ctr = (cctr_x, cctr_y)
+        Main.coordinates.append(Main.draw_ctr)
+    
+    
+    
 def pst():
     pos = pygame.mouse.get_pos()
     mouse_x = pos[0]
     mouse_y = pos[1]
     
-    if ((int(mouse_x/100) == 0) and (int(mouse_y/100) == 0)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (50,50), 5)
-        Main.grid_position = 1
-        Main.draw_ctr = (50,50)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 0)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (150,50), 5)
-        Main.grid_position = 2
-        Main.draw_ctr = (150,50)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 2) and (int(mouse_y/100) == 0)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (250,50), 5)
-        Main.grid_position = 3
-        Main.draw_ctr = (250,50)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 3) and (int(mouse_y/100) == 0)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (350,50), 5)
-        Main.grid_position = 4
-        Main.draw_ctr = (350,50)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 4) and (int(mouse_y/100) == 0)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (450,50), 5)
-        Main.grid_position = 5
-        Main.draw_ctr = (450,50)
-        Main.ctr_coordinates.append(Main.draw_ctr)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 0)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (550,50), 5)
-        Main.grid_position = 6
-        Main.line_colour = Main.Orange
-        Main.draw_ctr = (550,50)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 0) and (int(mouse_y/100) == 1)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (50,150), 5)
-        Main.grid_position = 7
-        Main.draw_ctr = (50,150)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 1)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (150,150), 5)
-        Main.grid_position = 8
-        Main.draw_ctr = (150,150)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 2) and (int(mouse_y/100) == 1)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (250,150), 5)
-        Main.grid_position = 9
-        Main.draw_ctr = (250,150)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 3) and (int(mouse_y/100) == 1)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (350,150), 5)
-        Main.grid_position = 10
-        Main.draw_ctr = (350,150)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 4) and (int(mouse_y/100) == 1)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (450,150), 5)
-        Main.grid_position = 11
-        Main.draw_ctr = (450,150)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 1)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (550,150), 5)
-        Main.grid_position = 12
-        Main.draw_ctr = (550,150)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 0) and (int(mouse_y/100) == 2)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (50,250), 5)
-        Main.grid_position = 13
-        Main.draw_ctr = (50,250)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 2)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (150,250), 5)
-        Main.grid_position = 14
-        Main.line_colour = Main.Yellow
-        Main.draw_ctr = (150,250)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 2) and (int(mouse_y/100) == 2)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (250,250), 5)
-        Main.grid_position = 15
-        Main.line_colour = Main.Red
-        Main.draw_ctr = (250,250)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 3) and (int(mouse_y/100) == 2)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (350,250), 5)
-        Main.grid_position = 16
-        Main.draw_ctr = (350,250)
-        Main.coordinates.append(Main.draw_ctr)
-                
-    elif ((int(mouse_x/100) == 4) and (int(mouse_y/100) == 2)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (450,250), 5)
-        Main.grid_position = 17
-        Main.draw_ctr = (450,250)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 2)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (550,250), 5)
-        Main.grid_position = 18
-        Main.draw_ctr = (550,250)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 0) and (int(mouse_y/100) == 3)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (50,350), 5)
-        Main.grid_position = 19
-        Main.draw_ctr = (50,350)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 3)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (150,350), 5)
-        Main.grid_position = 20
-        Main.draw_ctr = (150,350)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 2) and (int(mouse_y/100) == 3)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (250,350), 5)
-        Main.grid_position = 21
-        Main.draw_ctr = (250,350)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 3) and (int(mouse_y/100) == 3)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (350,350), 5)
-        Main.grid_position = 22
-        Main.line_colour = Main.Green
-        Main.draw_ctr = (350,350)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 4) and (int(mouse_y/100) == 3)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (450,350), 5)
-        Main.grid_position = 23
-        Main.draw_ctr = (450,350)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 3)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (550,350), 5)
-        Main.grid_position = 24
-        Main.line_colour = Main.Yellow
-        Main.draw_ctr = (550,350)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 0) and (int(mouse_y/100) == 4)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (50,450), 5)
-        Main.grid_position = 25
-        Main.draw_ctr = (50,450)
-        Main.coordinates.append(Main.draw_ctr)
     
-    elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 4)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (150,450), 5)
-        Main.grid_position = 26
-        Main.line_colour = Main.Green
-        Main.draw_ctr = (150,450)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 2) and (int(mouse_y/100) == 4)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (250,450), 5)
-        Main.grid_position = 27
-        Main.draw_ctr = (250,450)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 3) and (int(mouse_y/100) == 4)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (350,450), 5)
-        Main.grid_position = 28
-        Main.line_colour = Main.Orange
-        Main.draw_ctr = (350,450)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 4) and (int(mouse_y/100) == 4)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (450,450), 5)
-        Main.grid_position = 29
-        Main.line_colour = Main.Red
-        Main.draw_ctr = (450,450)
-        Main.coordinates.append(Main.draw_ctr)
+    # First row:
     
-    elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 4)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (550,450), 5)
-        Main.grid_position = 30
-        Main.line_colour = Main.Blue
-        Main.draw_ctr = (550,450)
-        Main.coordinates.append(Main.draw_ctr)
+    grid_moving_circle(0, 0, 50, 50, 1)
+    grid_moving_circle(1, 0, 150, 50, 2)
+    grid_moving_circle(2, 0, 250, 50, 3)
+    grid_moving_circle(3, 0, 350, 50, 4)
+    grid_moving_circle(4, 0, 450, 50, 5)
+    grid_moving_circle(5, 0, 550, 50, 6)
+    
+    # Second row:
+    
+    grid_moving_circle(0, 1, 50, 150, 7)
+    grid_moving_circle(1, 1, 150, 150, 8)
+    grid_moving_circle(2, 1, 250, 150, 9)
+    grid_moving_circle(3, 1, 350, 150, 10)
+    grid_moving_circle(4, 1, 450, 150, 11)
+    grid_moving_circle(5, 1, 550, 150, 12)
+    
+    # Third row:
+    
+    grid_moving_circle(0, 2, 50, 250, 13)
+    grid_moving_circle(1, 2, 150, 250, 14)
+    grid_moving_circle(2, 2, 250, 250, 15)
+    grid_moving_circle(3, 2, 350, 250, 16)
+    grid_moving_circle(4, 2, 450, 250, 17)
+    grid_moving_circle(5, 2, 550, 250, 18)
+    
+    # Fourth row:
+    
+    grid_moving_circle(0, 3, 50, 350, 19)
+    grid_moving_circle(1, 3, 150, 350, 20)
+    grid_moving_circle(2, 3, 250, 350, 21)
+    grid_moving_circle(3, 3, 350, 350, 22)
+    grid_moving_circle(4, 3, 450, 350, 23)
+    grid_moving_circle(5, 3, 550, 350, 24)
+    
+    # Fifth row:
+    
+    grid_moving_circle(0, 4, 50, 450, 25)
+    grid_moving_circle(1, 4, 150, 450, 26)
+    grid_moving_circle(2, 4, 250, 450, 27)
+    grid_moving_circle(3, 4, 350, 450, 28)
+    grid_moving_circle(4, 4, 450, 450, 29)
+    grid_moving_circle(5, 4, 550, 450, 30)
+    
+    # Sixth row:
+    
+    grid_moving_circle(0, 5, 50, 550, 31)
+    grid_moving_circle(1, 5, 150, 550, 32)
+    grid_moving_circle(2, 5, 250, 550, 33)
+    grid_moving_circle(3, 5, 350, 550, 34)
+    grid_moving_circle(4, 5, 450, 550, 35)
+    grid_moving_circle(5, 5, 550, 550, 36)
+    
         
-        
-    elif ((int(mouse_x/100) == 0) and (int(mouse_y/100) == 5)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (50,550), 5)
-        Main.grid_position = 31
-        Main.draw_ctr = (50,550)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 1) and (int(mouse_y/100) == 5)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (150,550), 5)
-        Main.grid_position = 32
-        Main.draw_ctr = (150,550)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 2) and (int(mouse_y/100) == 5)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (250,550), 5)
-        Main.grid_position = 33
-        Main.draw_ctr = (250,550)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 3) and (int(mouse_y/100) == 5)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (350,550), 5)
-        Main.grid_position = 34
-        Main.line_colour = Main.Blue
-        Main.draw_ctr = (350,550)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 4) and (int(mouse_y/100) == 5)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (450,550), 5)
-        Main.grid_position = 35
-        Main.draw_ctr = (450,550)
-        Main.coordinates.append(Main.draw_ctr)
-        
-    elif ((int(mouse_x/100) == 5) and (int(mouse_y/100) == 5)):
-        pygame.draw.circle(Main.screen, Main.line_colour, (550,550), 5)
-        Main.grid_position = 36
-        Main.draw_ctr = (550,550)
-        Main.coordinates.append(Main.draw_ctr)
-        
-        
+       
