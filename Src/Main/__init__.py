@@ -187,7 +187,7 @@ def message_display(text):
     screen.blit(TextSurf, TextRect)
     pygame.display.update()
     time.sleep(2)
-    game_loop()
+    game_level1()
 
 def crash():
     message_display("You Crashed")
@@ -217,7 +217,7 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
         pygame.draw.rect(screen, acolour, (button_x,button_y,button_w,button_h))
         if click[0] == 1 and action!= None:
             if action == "play":
-                game_loop()
+                game_level1()
             
             elif action == "instructions":
                 instruction_menu()
@@ -233,9 +233,13 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
                 if nresets == -1:
                     reset_font = pygame.font.SysFont(None, 25)
                     reset_text = reset_font.render("No more resets available", True, Red)
-                    screen.blit(reset_text,(0,625))
+                    screen.blit(reset_text,(5,625))
                 else:
-                    game_loop()
+                    game_level1()
+                    
+            elif action == "next level from level 1":
+                pygame.init()
+                game_level2()
                 
                 
                 
@@ -256,11 +260,11 @@ def reset_counter(nresets):
     if nresets >= 0:
         reset_font = pygame.font.SysFont(None, 25)
         reset_text = reset_font.render("Resets available: "+str(nresets), True, White)
-        screen.blit(reset_text,(0,605))
+        screen.blit(reset_text,(5,605))
     else:
         reset_font = pygame.font.SysFont(None, 25)
         reset_text = reset_font.render("Resets available: "+str(0), True, White)
-        screen.blit(reset_text,(0,605))
+        screen.blit(reset_text,(5,605))
         
         
 
@@ -311,15 +315,31 @@ def game_intro():
         pygame.display.update()
         
 
-        
-        
-def game_loop():
+
+# First level:        
+     
+def game_level1():
+    global Orange1Clicked
+    global Orange2Clicked 
+    global Red1Clicked
+    global Red2Clicked
+    global Yellow1Clicked
+    global Yellow2Clicked
+    global Green1Clicked
+    global Green2Clicked
+    global Blue1Clicked
+    global Blue2Clicked
+    global OrangeLink
+    global RedLink
+    global YellowLink
+    global GreenLink
+    global BlueLink
     global mouse_x
     global mouse_y
     global nresets
 
     # Naming the caption of the window opened for the Game
-    pygame.display.set_caption("Flow")
+    pygame.display.set_caption("Flow level 1")
     
     # Fill Screen in black for background
     screen.fill(Black)
@@ -404,7 +424,7 @@ def game_loop():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 CheckPos.check()
                 CheckPosition.pst()
-                Connection.clicked()
+                Connection.clicked(6,28,15,29,14,24,22,26,30,34)
                 if 50+200 > mouse_x > 50 and 650+100 > mouse_y > 650:
                     if nresets == -1:
                         reset_counter(nresets)
@@ -424,7 +444,153 @@ def game_loop():
                     GridPosition.pst()
                     #click_movement(mouse_x, mouse_y)
                     CheckPosition.pst()
-                    Connection.isConnected()
+                    Connection.isConnected(6,28,15,29,14,24,22,26,30,34)
+                            
+            if ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
+                # This will determine what will happen when the level is completed:
+                # At this point a message comes up saying level complete after all have been linked
+                text = font.render("Level Complete", True, White)
+                textpos = text.get_rect(centerx=background.get_width()/2)
+                textpos.top = 250
+                screen.blit(text, textpos)
+                button("Next level",300,400, 150, 100, DarkGreen, Green, 30, "next level from level 1")
+                #pygame.quit()
+        
+              
+        button("Reset Paths", 25,650,150,100, DarkBlue, Blue, 20, "reset")                  
+        button("Main menu", 225,650,150,100, DarkGreen, Green, 20, "main menu")
+        button("Quit game", 425,650,150,100, DarkRed, Red, 20, "quit")                       
+        # Update screen with changes
+        pygame.display.flip()
+        
+        
+def game_level2():
+    global Orange1Clicked
+    global Orange2Clicked 
+    global Red1Clicked
+    global Red2Clicked
+    global Yellow1Clicked
+    global Yellow2Clicked
+    global Green1Clicked
+    global Green2Clicked
+    global Blue1Clicked
+    global Blue2Clicked
+    global OrangeLink
+    global RedLink
+    global YellowLink
+    global GreenLink
+    global BlueLink
+    global mouse_x
+    global mouse_y
+    global nresets
+
+    # Naming the caption of the window opened for the Game
+    pygame.display.set_caption("Flow level 2")
+    
+    # Fill Screen in black for background
+    screen.fill(Black)
+    
+    circle_list = pygame.sprite.Group()
+
+    # Red Circle Pair:
+            
+    RedCircle1 = CircleRender.grid_circle(grid[0], grid[1], Red)
+    RedCircle2 = CircleRender.grid_circle(grid[5], grid[3], Red)
+    RedCircle1.render()
+    RedCircle2.render()
+        
+    # Blue Circle Pair:
+            
+    BlueCircle1 = CircleRender.grid_circle(grid[1], grid[1], Blue)
+    BlueCircle2 = CircleRender.grid_circle(grid[5], grid[4], Blue)
+    BlueCircle1.render()
+    BlueCircle2.render()
+            
+    # Green Circle Pair:
+            
+    GreenCircle1 = CircleRender.grid_circle(grid[3], grid[1], Green)
+    GreenCircle2 = CircleRender.grid_circle(grid[4], grid[4], Green)
+    GreenCircle1.render()
+    GreenCircle2.render()
+            
+    
+    # Orange Circle Pair:
+            
+    OrangeCircle1 = CircleRender.grid_circle(grid[1], grid[3], Orange)
+    OrangeCircle2 = CircleRender.grid_circle(grid[0], grid[5], Orange)
+    OrangeCircle1.render()
+    OrangeCircle2.render()
+            
+    # Yellow Circle Pair:
+            
+    YellowCircle1 = CircleRender.grid_circle(grid[1], grid[2], Yellow)
+    YellowCircle2 = CircleRender.grid_circle(grid[1], grid[4], Yellow)
+    YellowCircle1.render()
+    YellowCircle2.render()
+    
+    
+    # Sprite list with all the circles
+    circle_list.add(RedCircle1, RedCircle2, BlueCircle1, BlueCircle2, GreenCircle1, GreenCircle2, OrangeCircle1, OrangeCircle2, YellowCircle1, YellowCircle2)
+    
+    
+    # Grid built here:
+    Grid.build_grid()
+
+    reset_counter(nresets)
+    
+    line_colour = ()
+
+    
+    global ctr_coordinates
+    ctr_coordinates = []
+    coordinates = []
+
+    
+    # Condition variables for links
+    OrangeLink = False
+    RedLink = False
+    YellowLink = False
+    GreenLink = False
+    BlueLink = False
+    
+    
+    done = False
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_x = mouse_pos[0]
+    mouse_y = mouse_pos[1]
+    
+    
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True  # Closes the game and exits the loop
+                    
+                    #carry this on to check condition to be checked later for allowing to mouse to draw anywhere.
+                        
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                CheckPos.check()
+                CheckPosition.pst()
+                Connection.clicked(20,31,7,24,14,26,10,29,8,30)
+                if 50+200 > mouse_x > 50 and 650+100 > mouse_y > 650:
+                    if nresets == -1:
+                        reset_counter(nresets)
+                        
+                    else:
+                        nresets = nresets - 1
+                        reset_counter(nresets)
+                
+            elif event.type == pygame.MOUSEMOTION:
+                state = pygame.mouse.get_pressed()
+                pos = pygame.mouse.get_pos()
+                mouse_x = pos[0]
+                mouse_y = pos[1]
+                        
+                if state[0] == 1:
+                    #CheckPos.check() # Gets the line colour by checking the position of where the user clicks
+                    GridPosition.pst()
+                    #click_movement(mouse_x, mouse_y)
+                    CheckPosition.pst()
+                    Connection.isConnected(20,31,7,24,14,26,10,29,8,30)
                             
             if ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
                 # This will determine what will happen when the level is completed:
@@ -441,6 +607,8 @@ def game_loop():
         button("Quit game", 425,650,150,100, DarkRed, Red, 20, "quit")                       
         # Update screen with changes
         pygame.display.flip()
+        
+        
             
 game_intro()
     
