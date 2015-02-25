@@ -23,54 +23,52 @@ def clicked(orangegp1, orangegp2, redgp1, redgp2, yellowgp1, yellowgp2, greengp1
     global YellowLink
     global GreenLink
     global BlueLink
-    CheckPosition.pst()
     
-    # Orange Pair
-    if Main.grid_position == orangegp1:
-        #print("Orange button 1 clicked:", Orange1Clicked)
-        Main.Orange1Clicked = True
     
-    elif Main.grid_position == orangegp2:
-        #print("Orange button 2 clicked:", Orange2Clicked)
-        Main.Orange2Clicked = True
-        
     # Red Pair
-    elif Main.grid_position == redgp1:
-        #print("Red button 1 clicked:", Red1Clicked)
+    if Main.grid_position == redgp1:
         Main.Red1Clicked = True
-
+        print("Red button 1 clicked:", Main.Red1Clicked)
         
     elif Main.grid_position == redgp2:
-        #print("Red button 2 clicked:", Red2Clicked)
         Main.Red2Clicked = True
+        print("Red button 2 clicked:", Main.Red2Clicked)
+
+    # Orange Pair
+    elif Main.grid_position == orangegp1:
+        Main.Orange1Clicked = True
+        print("Orange button 1 clicked:", Main.Orange1Clicked)
         
+    elif Main.grid_position == orangegp2:
+        Main.Orange2Clicked = True
+        print("Orange button 2 clicked:", Main.Orange2Clicked)
+            
     # Yellow Pair
     elif Main.grid_position == yellowgp1:
-        #print("Yellow button 1 clicked:", Yellow1Clicked)
         Main.Yellow1Clicked = True
+        print("Yellow button 1 clicked:", Main.Yellow1Clicked)
         
     elif Main.grid_position == yellowgp2:
-        #print("Yellow button 2 clicked:", Yellow2Clicked)
         Main.Yellow2Clicked = True
+        print("Yellow button 2 clicked:", Main.Yellow2Clicked)
         
     # Green Pair
     elif Main.grid_position == greengp1:
-        #print("Green button 1 clicked:", Green1Clicked)
         Main.Green1Clicked = True
+        print("Green button 1 clicked:", Main.Green1Clicked)
         
     elif Main.grid_position == greengp2:
-        #print("Green button 2 clicked:", Green2Clicked)
         Main.Green2Clicked = True
-        
+        print("Green button 2 clicked:", Main.Green2Clicked)
+
     # Blue Pair
     elif Main.grid_position ==  bluegp1:
-        #print("Blue button 1 clicked:", Blue1Clicked)
-        Main.Blue1Clicked = True
+        Main.Blue1Clicked = True 
+        print("Blue button 1 clicked:", Main.Blue1Clicked)
         
     elif Main.grid_position == bluegp2:
-        #print("Blue button 2 clicked:", Blue2Clicked)
         Main.Blue2Clicked = True
-    
+        print("Blue button 2 clicked:", Main.Blue2Clicked)
     
 #WORKS:
 def isConnected(orangegp1, orangegp2, redgp1, redgp2, yellowgp1, yellowgp2, greengp1, greengp2, bluegp1, bluegp2):
@@ -89,6 +87,8 @@ def isConnected(orangegp1, orangegp2, redgp1, redgp2, yellowgp1, yellowgp2, gree
     global YellowLink
     global GreenLink
     global BlueLink
+    
+    
     
     # Orange Pair:
     if Main.Orange1Clicked == True:
