@@ -3,15 +3,32 @@ import pygame
 import Main
 from Main.CircleRender import grid_circle
 
+# Checks if user has clicked circle to give line_colour a value, at mouseclick event
+def no_linecolour_crash():
+    if Main.line_colour == ():
+        reset_font = pygame.font.SysFont(None, 25)
+        reset_text = reset_font.render("Please click a circle to begin", True, Main.Red)
+        Main.screen.blit(reset_text,(350,605))
+    
+
 def grid_moving_circle(gridn_x, gridn_y, cctr_x, cctr_y, gridn):
     pos = pygame.mouse.get_pos()
     mouse_x = pos[0]
     mouse_y = pos[1]
-    if ((int(mouse_x/100) == gridn_x) and (int(mouse_y/100) == gridn_y)): 
+    
+    if Main.line_colour == ():
+        reset_font = pygame.font.SysFont(None, 25)
+        reset_text = reset_font.render("Please click a circle to begin", True, Main.Red)
+        Main.screen.blit(reset_text,(350,605))
+        
+    elif ((int(mouse_x/100) == gridn_x) and (int(mouse_y/100) == gridn_y)): 
         pygame.draw.circle(Main.screen, Main.line_colour, (cctr_x, cctr_y), 30)
         Main.grid_position = gridn
         Main.draw_ctr = (cctr_x, cctr_y)
         Main.coordinates.append(Main.draw_ctr)
+        reset_font = pygame.font.SysFont(None, 25)
+        reset_text = reset_font.render("Please click a circle to begin", True, Main.Black)
+        Main.screen.blit(reset_text,(350,605))
     
     
     

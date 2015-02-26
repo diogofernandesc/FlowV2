@@ -240,6 +240,7 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
                     reset_text = reset_font.render("No more resets available", True, Red)
                     screen.blit(reset_text,(5,625))
                 else:
+                    line_colour = ()
                     game_level1()
                     
             elif action == "next level from level 1":
@@ -360,7 +361,7 @@ def game_level1():
     global mouse_x
     global mouse_y
     global nresets
-
+    global line_colour
     # Naming the caption of the window opened for the Game
     pygame.display.set_caption("Flow level 1")
     
@@ -416,7 +417,7 @@ def game_level1():
     reset_counter(nresets)
     
     line_colour = ()
-
+    print(line_colour)
     
     global ctr_coordinates
     ctr_coordinates = []
@@ -456,6 +457,7 @@ def game_level1():
                     #carry this on to check condition to be checked later for allowing to mouse to draw anywhere.
                         
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                GridPosition.no_linecolour_crash()
                 Line.linecolour(5, 0, 3, 4, 2, 2, 4, 4, 1, 2, 5, 3, 3, 3, 1, 4, 5, 4, 3, 5)
                 CheckPosition.pst()
                 Connection.clicked(6,28,15,29,14,24,22,26,30,34)
