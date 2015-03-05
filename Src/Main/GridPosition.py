@@ -21,7 +21,8 @@ def grid_moving_circle(gridn_x, gridn_y, cctr_x, cctr_y, gridn):
         reset_text = reset_font.render("Please click a circle to begin", True, Main.Red)
         Main.screen.blit(reset_text,(350,605))
         
-    elif ((int(mouse_x/100) == gridn_x) and (int(mouse_y/100) == gridn_y)): 
+    elif ((int(mouse_x/100) == gridn_x) and (int(mouse_y/100) == gridn_y)):
+        # Draws circles as user moves mouse:
         pygame.draw.circle(Main.screen, Main.line_colour, (cctr_x, cctr_y), 30)
         Main.grid_position = gridn
         Main.draw_ctr = (cctr_x, cctr_y)

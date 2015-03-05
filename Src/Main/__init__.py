@@ -8,6 +8,7 @@
 # Defining colours for the circles, paths(lines) and grid background
 
 import pygame
+import pygame.time
 import pygame.font
 import pygame.gfxdraw
 import time
@@ -36,12 +37,18 @@ VeryDarkGrey = (20, 20, 20)
 
 
 
-# Setting the grid size through width and height of game window
+
+# Setting the grid size through width and height of game window:
+
+# Initialize pygame imported modules
 pygame.init()
+
 display_width = 600
 display_height = 800
-scr_size = (600, 800)
+scr_size = (display_width, display_height)
 screen = pygame.display.set_mode(scr_size)
+
+clock = pygame.time.Clock()
 
 # Loops until the user clicks the close Button
 done = False
@@ -278,11 +285,72 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
     textRect.center = ((button_x+(button_w/2),(button_y+(100/2))))
     screen.blit(textSurf, textRect)
   
+def retry():
+    button("",20,170, 560, 150, Lightblue, Lightblue, 30, "none")
+    button("",20,380, 560, 150, Lightblue, Lightblue, 30, "none")
+    # This will determine what will happen when the level is completed:
+    # At this point a message comes up saying level complete after all have been linked
+    text = font.render("Out of time!", True, Black)
+    textpos = text.get_rect(centerx=background.get_width()/2)
+    textpos.top = 210
+    screen.blit(text, textpos)
+    button("Retry",50,400, 200, 100, DarkGreen, Green, 30, "play")
+    button("Quit game",350,400, 200, 100, DarkGrey, Grey, 30, "quit")
+    
 
 
-                
-                
-                
+def timer():
+    global frame_count
+    global frame_rate
+    global level_time
+    
+    timer_font = pygame.font.SysFont(None, 25)
+    
+    # Calculate total seconds
+    total_seconds = frame_count // frame_rate
+    # Divide by 60 to get total minutes
+    minutes = total_seconds // 60
+     
+    # Use modulus (remainder) to get seconds
+    seconds = total_seconds % 60
+     
+    # --- Timer going down ---
+    # --- Timer going up ---
+    # Calculate total seconds
+    total_seconds = level_time - (frame_count // frame_rate)
+    if total_seconds < 0:
+        # Statements executed when time runs out:
+        total_seconds = 0
+        retry()
+        
+    else:
+        # Need this to create a black background over the blitted text as to not overlap
+        button("", 210, 605, 125, 20, Black, Black, 10, "none") 
+        # Divide by 60 to get total minutes
+        minutes = total_seconds // 60
+         
+        # Use modulus (remainder) to get seconds
+        seconds = total_seconds % 60
+         
+        # Use python string formatting to format in leading zeros
+        time_string = "Time left: {0:02}:{1:02}".format(minutes, seconds)
+         
+        # Blit to the screen
+        time_text = timer_font.render(str(time_string), True, White)
+        screen.blit(time_text, (210,605))
+    
+        # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
+        frame_count += 1
+        
+        # Control the second change of the timer to be equal to a second
+        clock.tick(frame_rate)
+    
+
+    
+    
+          
+          
+                                
 def reset_counter(nresets):
     if nresets >= 0:
         reset_font = pygame.font.SysFont(None, 25)
@@ -316,9 +384,8 @@ def instruction_menu():
         
         pygame.display.update()
 
+
 def game_intro():
-    display_width = 600
-    display_height = 600
     pygame.display.set_caption("Flow Main Menu")
     intro = True
     
@@ -365,11 +432,20 @@ def game_level1():
     global nresets
     global line_colour
     global game_level
+    global frame_count
+    global frame_rate
+    global level_time
     # Naming the caption of the window opened for the Game
     pygame.display.set_caption("Flow level 1")
     
     # Set which level is currently being played:
+    
     game_level = 1
+    frame_count = 0
+    frame_rate = 60
+
+    # Time for each level:
+    level_time = 15
     
     # Fill Screen in black for background
     screen.fill(Black)
@@ -490,6 +566,7 @@ def game_level1():
                     Connection.isConnected(6,28,15,29,14,24,22,26,30,34)
                             
             if ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
+                # Need to clean this up to one function:
                 button("",20,170, 560, 150, Lightblue, Lightblue, 30, "none")
                 button("",20,380, 560, 150, Lightblue, Lightblue, 30, "none")
                 # This will determine what will happen when the level is completed:
@@ -501,8 +578,9 @@ def game_level1():
                 button("Next level",50,400, 200, 100, DarkGreen, Green, 30, "next level from level 1")
                 button("Quit game",350,400, 200, 100, DarkGrey, Grey, 30, "quit")
                 #pygame.quit()'''
-        
-              
+         
+        # Countdown timer: 
+        timer()
         button("Reset Paths", 25,650,150,100, DarkBlue, Blue, 20, "reset_level1")                  
         button("Main menu", 225,650,150,100, DarkGreen, Green, 20, "main menu")
         button("Quit game", 425,650,150,100, DarkRed, Red, 20, "quit")                       
