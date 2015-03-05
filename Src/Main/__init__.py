@@ -217,10 +217,10 @@ def text_objects(text, font):
     textSurface = font.render(text, True, Black)
     return textSurface, textSurface.get_rect() 
 
-def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsize, action= None):
+def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsize, action= None): # icolour = inactive colour & acolour = active colour
     global nresets
-    # (icolour = inactive colour & acolour = active colour) ( Width is 200) (height 100)
-    
+
+
     pos = pygame.mouse.get_pos()
     mouse_x = pos[0]
     mouse_y = pos[1]
@@ -264,13 +264,13 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
                     
             
                 
-            elif action == "next level from level 1":
+            elif action == "level 2":
                 game_level2()
                 
-            elif action == "next level from level 2":
+            elif action == "level 3":
                 game_level3()
                 
-            elif action == "next level from level 3":
+            elif action == "level 4":
                 game_level4()
                 
             elif action == "none":
@@ -284,7 +284,22 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ((button_x+(button_w/2),(button_y+(100/2))))
     screen.blit(textSurf, textRect)
-  
+
+def level_complete(nextlevel):
+    # Need to clean this up to one function:
+    button("",20,170, 560, 150, Lightblue, Lightblue, 30, "none")
+    button("",20,380, 560, 150, Lightblue, Lightblue, 30, "none")
+    # This will determine what will happen when the level is completed:
+    # At this point a message comes up saying level complete after all have been linked
+    text = font.render("Level Complete", True, Black)
+    textpos = text.get_rect(centerx=background.get_width()/2)
+    textpos.top = 210
+    screen.blit(text, textpos)
+    button("Next level",50,400, 200, 100, DarkGreen, Green, 30, nextlevel)
+    button("Quit game",350,400, 200, 100, DarkGrey, Grey, 30, "quit")
+
+
+
 def retry():
     button("",20,170, 560, 150, Lightblue, Lightblue, 30, "none")
     button("",20,380, 560, 150, Lightblue, Lightblue, 30, "none")
@@ -308,16 +323,15 @@ def timer():
     
     # Calculate total seconds
     total_seconds = frame_count // frame_rate
+    
     # Divide by 60 to get total minutes
     minutes = total_seconds // 60
      
     # Use modulus (remainder) to get seconds
     seconds = total_seconds % 60
      
-    # --- Timer going down ---
-    # --- Timer going up ---
-    # Calculate total seconds
     total_seconds = level_time - (frame_count // frame_rate)
+    
     if total_seconds < 0:
         # Statements executed when time runs out:
         total_seconds = 0
@@ -346,10 +360,6 @@ def timer():
         clock.tick(frame_rate)
     
 
-    
-    
-          
-          
                                 
 def reset_counter(nresets):
     if nresets >= 0:
@@ -566,18 +576,8 @@ def game_level1():
                     Connection.isConnected(6,28,15,29,14,24,22,26,30,34)
                             
             if ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
-                # Need to clean this up to one function:
-                button("",20,170, 560, 150, Lightblue, Lightblue, 30, "none")
-                button("",20,380, 560, 150, Lightblue, Lightblue, 30, "none")
-                # This will determine what will happen when the level is completed:
-                # At this point a message comes up saying level complete after all have been linked
-                text = font.render("Level Complete", True, Black)
-                textpos = text.get_rect(centerx=background.get_width()/2)
-                textpos.top = 210
-                screen.blit(text, textpos)
-                button("Next level",50,400, 200, 100, DarkGreen, Green, 30, "next level from level 1")
-                button("Quit game",350,400, 200, 100, DarkGrey, Grey, 30, "quit")
-                #pygame.quit()'''
+                level_complete("level 2")
+                
          
         # Countdown timer: 
         timer()
