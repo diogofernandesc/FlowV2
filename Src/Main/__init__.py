@@ -341,60 +341,10 @@ def level_finished(situation, nextlevel, current_level):
             textpos = text.get_rect(centerx=background.get_width()/2)
             textpos.top = 210
             screen.blit(text, textpos)
-            button("Main Menu",200,400, 200, 100, DarkGreen, Green, 30, "main menu")
+            button("Main Menu",50,400, 200, 100, DarkGreen, Green, 30, current_level)
+            button("Quit game",350,400, 200, 100, DarkRed, Red, 30, "quit")
             
-        
         pygame.display.flip()
-        
-            
-        
-
-def level_complete(nextlevel):
-    done = False
-    while not done:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                done = True  # Closes the game and exits the loop
-                
-                
-    
-        # Need to clean this up to one function:
-        button("",20,170, 560, 150, Lightblue, Lightblue, 30, "none")
-        button("",20,380, 560, 150, Lightblue, Lightblue, 30, "none")
-        # This will determine what will happen when the level is completed:
-        # At this point a message comes up saying level complete after all have been linked
-        text = font.render("Level Complete", True, Black)
-        textpos = text.get_rect(centerx=background.get_width()/2)
-        textpos.top = 210
-        screen.blit(text, textpos)
-        button("Next level",50,400, 200, 100, DarkGreen, Green, 30, nextlevel)
-        button("Quit game",350,400, 200, 100, DarkGrey, Grey, 30, "quit")
-                
-        pygame.display.flip()
-        
-
-
-def retry(current_level):
-    button("",20,170, 560, 150, Lightblue, Lightblue, 30, "none")
-    button("",20,380, 560, 150, Lightblue, Lightblue, 30, "none")
-    text = font.render("Out of time!", True, Black)
-    textpos = text.get_rect(centerx=background.get_width()/2)
-    textpos.top = 210
-    screen.blit(text, textpos)
-    button("Retry",50,400, 200, 100, DarkGreen, Green, 30, current_level)
-    button("Quit game",350,400, 200, 100, DarkGrey, Grey, 30, "quit")
-
-def game_finished():
-    button("",20,170, 560, 150, Lightblue, Lightblue, 30, "none")
-    button("",20,380, 560, 150, Lightblue, Lightblue, 30, "none")
-    # This will determine what will happen when the level is completed:
-    # At this point a message comes up saying level complete after all have been linked
-    text = font.render("Game Complete!", True, Black)
-    textpos = text.get_rect(centerx=background.get_width()/2)
-    textpos.top = 210
-    screen.blit(text, textpos)
-    button("Main Menu",375,400, 200, 100, DarkGreen, Green, 30, "main menu")
-
 
 def timer(situation, nextlevel, current_level):
     global frame_count
@@ -456,20 +406,21 @@ def reset_counter(nresets):
         
 def instruction_menu():
     pygame.display.set_caption("Flow Instructions")
-    intro = True
-    while intro:
+    instrMenu = True
+    while instrMenu:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
         
         screen.fill(Grey)
         text("Instructions", 300, 100, 70)
-        text("The objective of flow is to connect all the circle pairs together of the same colour:",300,200,15)
-        text("1. Click a circle to choose that colour", 300, 300, 15)
-        text("2. Click and drag from chosen circle to colour partner to complete link", 300, 350, 15)
-        text("3. Try to complete the links before the timer runs out",300,400, 15)
-        text("4. You can only reset the level a maximum of 3 times",300, 450, 15)
-        text("5. Enjoy yourself!", 300,500, 15)
+        text("The objective of flow is to connect all the circle pairs of the same colour, together:",300,200,15)
+        text("- Click one of the circles to begin", 300, 250, 15)
+        text("- Hold down the left mouse button and drag to its colour partner to complete the link", 300, 300, 15)
+        text("- Once a link is complete, the link colour will light up at the bottom of the screen", 300, 350, 15)
+        text("- You have 15 seconds to complete the level", 300, 400, 15)
+        text("- You have three resets available to you, which also reset the time!", 300, 450, 15)
+        text("- Enjoy yourself!", 300,500, 15)
         
         button("Play", 50,600,200,100, DarkGreen, Green,30, "level 1")
         button("Quit",350,600,200,100, DarkRed, Red,30, "quit")
