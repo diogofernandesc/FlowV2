@@ -11,7 +11,7 @@ import pygame.font
 import pygame.gfxdraw
 import time
 
-from Main import Grid, CircleRender, CircleMovement, GridPosition, Connection, CheckPosition
+from Main import Grid, CircleRender, GridPosition, Connection, CheckPosition
 from Main import Line
 
 
@@ -55,14 +55,10 @@ done = False
 font = pygame.font.Font(None, 100)
 background = pygame.Surface(screen.get_size())
 
+
 # Defining grid positions for circles
 # Array storing different grid positions possible for circles (their center) for both x and y:
 
-pos = pygame.mouse.get_pos()
-mouse_x = pos[0]
-mouse_y = pos[1]
-
-nresets = 3
 
 '''
 Position in pixels: 
@@ -127,52 +123,16 @@ YellowCircle2 = CircleRender.grid_circle(grid[5], grid[3], Yellow)
 YellowCircle1.render()
 YellowCircle2.render()
 
+# Used to evaluate whether circles have been connected in the Connection module
+grid_position = ()
 
-# Sprite list with all the circles
-circle_list.add(RedCircle1, RedCircle2, BlueCircle1, BlueCircle2, GreenCircle1, GreenCircle2, OrangeCircle1, OrangeCircle2, YellowCircle1, YellowCircle2)
-
-# Initialize level being played variable:
-
-game_level = ()
-
-# Grid built here:
-Grid.build_grid()
-
-line_colour = ()
-
-# Used to evaluate the colour where the user clicks
-clicked_colour = () 
-#Proceed dictates whether the line will be drawn at the next centre of box (100x100)
-
-proceed = ()
-
-#Condition variable for checking if circle is being clicked
-clicked = False
-
-# Used to determine which circle is being clicked in other modules:
-circle = ()
-
-global ctr_coordinates
-ctr_coordinates = []
+# List which can be appended to for the centre of the circles which will have to be drawn
 coordinates = []
 
-# Used to check whether box is already in use (coloured in)
-interference_list = []
 
-# Used for drawing lines when user clicks:
-grid_position = ()
-draw_ctr = ()
+# Amount of resets available to player
+nresets = 3
 
-
-
-
-def click_movement(x, y):
-    global coordinates
-    mouse_pos = (x,y)
-    coordinates.append(mouse_pos)
-    if len(coordinates) == 2:
-        pygame.draw.aalines(screen, line_colour, False, [(coordinates[0]), (coordinates[1])], True)
-        coordinates = []
 
 # Condition variables for clicks
 Orange1Clicked = False
@@ -206,7 +166,7 @@ def text_objects(text, font):
 
 def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsize, action= None): # icolour = inactive colour & acolour = active colour
     global nresets
-
+    global current_level
 
     pos = pygame.mouse.get_pos()
     mouse_x = pos[0]
@@ -237,7 +197,6 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
                     reset_text = reset_font.render("No more resets available", True, Red)
                     screen.blit(reset_text,(5,625))
                 else:
-                    line_colour = ()
                     game_level("level 1", "level 2", "reset_level1", 2, 2, 4, 4, 5, 4, 3, 5, 3, 3, 1, 4, 5, 0, 3, 4, 1, 2, 5, 3, 5, 0, 3, 4, 2, 2, 4, 4, 1, 2, 5, 3, 3, 3, 1, 4, 5, 4, 3, 5, 6, 28, 15, 29, 14, 24, 22, 26, 30, 34)
 
                     
@@ -247,7 +206,6 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
                     reset_text = reset_font.render("No more resets available", True, Red)
                     screen.blit(reset_text,(5,625))
                 else:
-                    line_colour = ()
                     game_level("level 2", "level 3", "reset_level2", 0, 1, 5, 3, 1, 1, 5, 4, 3, 1, 4, 4, 1, 3, 0, 5, 1, 2, 1, 4, 1, 3, 0, 5, 0, 1, 5, 3, 1, 2, 1, 4, 3, 1, 4, 4, 1, 1, 5, 4, 20, 31, 7, 24, 14, 26, 10, 29, 8, 30)
             
             elif action == "reset_level3":
@@ -256,7 +214,6 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
                     reset_text = reset_font.render("No more resets available", True, Red)
                     screen.blit(reset_text,(5,625))
                 else:
-                    line_colour = ()
                     game_level("level 3", "level 4", "reset_level3", 4, 1, 4, 4, 4, 2, 4, 5, 5, 1, 3, 5, 0, 0, 1, 4, 0, 1, 2, 5, 0, 0, 1, 4, 4, 1, 4, 4, 0, 1, 1, 4, 5, 1, 3, 5, 4, 2, 4, 5, 1, 26, 11, 29, 7, 33, 12, 34, 17, 35)
                     
             elif action == "reset_level4":
@@ -265,7 +222,6 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
                     reset_text = reset_font.render("No more resets available", True, Red)
                     screen.blit(reset_text,(5,625))
                 else:
-                    line_colour = ()
                     game_level("level 4", "level 5", "reset_level4", 5, 0, 0, 4, 0, 0, 3, 4, 1, 2, 2, 3, 0, 2, 2, 4, 0, 1, 3, 3, 0, 2, 2, 4, 5, 0, 0, 4, 0, 1, 3, 3, 1, 2, 2, 3, 0, 0, 3, 4, 13, 27, 6, 25, 7, 22, 14, 21, 1, 28)
 
             elif action == "reset_level5":
@@ -274,7 +230,6 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
                     reset_text = reset_font.render("No more resets available", True, Red)
                     screen.blit(reset_text,(5,625))
                 else:
-                    line_colour = ()
                     game_level("level 5", "game complete", "reset_level5", 1, 2, 3, 2, 2, 4, 4, 4, 1, 1, 2, 5, 5, 0, 0, 5, 5, 1, 3, 5, 5, 0, 0, 5, 1, 2, 3, 2, 5, 1, 3, 5, 1, 1, 2, 5, 2, 4, 4, 4, 6, 31, 14, 16, 12, 34, 8, 33, 27, 29)
 
                 
@@ -291,7 +246,9 @@ def button(msg, button_x, button_y, button_w, button_h, icolour, acolour, fontsi
                 game_level("level 5", "game complete", "reset_level5", 1, 2, 3, 2, 2, 4, 4, 4, 1, 1, 2, 5, 5, 0, 0, 5, 5, 1, 3, 5, 5, 0, 0, 5, 1, 2, 3, 2, 5, 1, 3, 5, 1, 1, 2, 5, 2, 4, 4, 4, 6, 31, 14, 16, 12, 34, 8, 33, 27, 29)
 
             elif action == "game complete":
-                game_finished()
+                level_finished("game complete", action, current_level)
+                pygame.display.update()
+                time.sleep(1)
             
             elif action == "none":
                 pass
@@ -341,26 +298,23 @@ def level_finished(situation, nextlevel, current_level):
             textpos = text.get_rect(centerx=background.get_width()/2)
             textpos.top = 210
             screen.blit(text, textpos)
-            button("Main Menu",50,400, 200, 100, DarkGreen, Green, 30, current_level)
-            button("Quit game",350,400, 200, 100, DarkRed, Red, 30, "quit")
+            button("Main Menu",50,400, 200, 100, DarkGreen, Green, 30, "main menu")
+            button("Quit game",350,400, 200, 100, DarkGrey, Grey, 30, "quit")
             
         pygame.display.flip()
 
 def timer(situation, nextlevel, current_level):
+    
+    '''
+    At each frame seconds tick down at the same rate that a second ticks down
+    '''
+    
     global frame_count
     global frame_rate
     global level_time
     
     timer_font = pygame.font.SysFont(None, 25)
     
-    # Calculate total seconds
-    total_seconds = frame_count // frame_rate
-    
-    # Divide by 60 to get total minutes
-    minutes = total_seconds // 60
-     
-    # Use modulus (remainder) to get seconds
-    seconds = total_seconds % 60
      
     total_seconds = level_time - (frame_count // frame_rate)
     
@@ -385,7 +339,7 @@ def timer(situation, nextlevel, current_level):
         time_text = timer_font.render(str(time_string), True, White)
         screen.blit(time_text, (210,605))
     
-        # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
+        # Controls the rate of change of frames 
         frame_count += 1
         
         # Control the second change of the timer to be equal to a second
@@ -394,6 +348,10 @@ def timer(situation, nextlevel, current_level):
 
                                 
 def reset_counter(nresets):
+    '''
+    Using variable nresets, blits the value of nresets each time it changes
+    I had to have a condition for zero nresets otherwise the counter would not blit the last reset available as 0
+    '''
     if nresets >= 0:
         reset_font = pygame.font.SysFont(None, 25)
         reset_text = reset_font.render("Resets available: "+str(nresets), True, White)
@@ -430,9 +388,9 @@ def instruction_menu():
 
 def game_intro():
     pygame.display.set_caption("Flow Main Menu")
-    intro = True
+    Gintro = True
     
-    while intro:
+    while Gintro:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -450,10 +408,12 @@ def game_intro():
         
         pygame.display.update()
         
-# Arguments: Big letters (R, B, G, Y, O) represent stationary circles, small letters (o, r, g, y, b) used to check connections complete or if clicked
-# Arguments: action to say what happens after level complete, and rAction for action for the reset button
 
 def game_level(current_level, action, rAction, R1x, R1y, R2x, R2y, B1x, B1y, B2x, B2y, G1x, G1y, G2x, G2y, O1x, O1y, O2x, O2y, Y1x, Y1y, Y2x, Y2y, o_x1, o_y1, o_x2, o_y2, r_x1, r_y1, r_x2, r_y2, yel_x1, yel_y1, yel_x2, yel_y2, g_x1, g_y1, g_x2, g_y2, b_x1, b_y1, b_x2, b_y2, orangegp1, orangegp2, redgp1, redgp2, yellowgp1, yellowgp2, greengp1, greengp2, bluegp1, bluegp2):
+    '''
+     Arguments: Big letters (R, B, G, Y, O) represent stationary circles, small letters (o, r, g, y, b) used to check connections complete or if clicked
+     Arguments: action to say what happens after level complete, and rAction for action for the reset button
+    '''
     global Orange1Clicked
     global Orange2Clicked 
     global Red1Clicked
@@ -476,10 +436,10 @@ def game_level(current_level, action, rAction, R1x, R1y, R2x, R2y, B1x, B1y, B2x
     global frame_count
     global frame_rate
     global level_time
+    
     # Naming the caption of the window opened for the Game
     pygame.display.set_caption("Flow " + current_level)
     
-    # Set which level is currently being played:
     
     frame_count = 0
     frame_rate = 60
@@ -540,12 +500,7 @@ def game_level(current_level, action, rAction, R1x, R1y, R2x, R2y, B1x, B1y, B2x
     Connection.complete_status()
     
     line_colour = ()
-    print(line_colour)
     
-    global ctr_coordinates
-    ctr_coordinates = []
-    coordinates = []
-
     
     # Condition variables for links
     OrangeLink = False
@@ -580,10 +535,12 @@ def game_level(current_level, action, rAction, R1x, R1y, R2x, R2y, B1x, B1y, B2x
                     #carry this on to check condition to be checked later for allowing to mouse to draw anywhere.
                         
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                # This stops program from crashing if user clicks anywhere but not the actual circle because line_colour would have no value
                 GridPosition.no_linecolour_crash()
                 Line.linecolour(o_x1, o_y1, o_x2, o_y2, r_x1, r_y1, r_x2, r_y2, yel_x1, yel_y1, yel_x2, yel_y2, g_x1, g_y1, g_x2, g_y2, b_x1, b_y1, b_x2, b_y2)
                 CheckPosition.pst()
                 Connection.clicked(orangegp1, orangegp2, redgp1, redgp2, yellowgp1, yellowgp2, greengp1, greengp2, bluegp1, bluegp2)
+                # Checks whether user clicks the reset button:
                 if 50+200 > mouse_x > 50 and 650+100 > mouse_y > 650:
                     if nresets == -1:
                         reset_counter(nresets)
@@ -603,14 +560,18 @@ def game_level(current_level, action, rAction, R1x, R1y, R2x, R2y, B1x, B1y, B2x
                     GridPosition.pst()
                     #click_movement(mouse_x, mouse_y)
                     CheckPosition.pst()
+                    # checks whether
                     Connection.isConnected(orangegp1, orangegp2, redgp1, redgp2, yellowgp1, yellowgp2, greengp1, greengp2, bluegp1, bluegp2)
                             
             if ((OrangeLink == True) and (RedLink == True) and (YellowLink == True) and (GreenLink == True) and (BlueLink == True)):
+                # Wait for 1 second because there seems to be a problem whereby if the user is still holding the mouse the program will continue evaluating in other circumstances, explained in project:
                 time.sleep(1)
                 if current_level == "level 5":
+                    # Bring up game complete window if the 5th level is complete:
                     level_finished("game complete", action, current_level)
                     
                 else:
+                    # Bring up level complete screen if the current level is complete
                     level_finished("level complete", action, current_level)
                     
                     

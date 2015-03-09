@@ -17,6 +17,7 @@ def grid_moving_circle(gridn_x, gridn_y, cctr_x, cctr_y, gridn):
     mouse_y = pos[1]
     
     if Main.line_colour == ():
+        # Stops the program from crashing when the variable line_colour is empty and an attempt to draw without click happens
         reset_font = pygame.font.SysFont(None, 25)
         reset_text = reset_font.render("Please click a circle to begin", True, Main.Red)
         Main.screen.blit(reset_text,(350,605))
@@ -27,6 +28,9 @@ def grid_moving_circle(gridn_x, gridn_y, cctr_x, cctr_y, gridn):
         Main.grid_position = gridn
         Main.draw_ctr = (cctr_x, cctr_y)
         Main.coordinates.append(Main.draw_ctr)
+        # This is used so that when the value of line_colour is occupied by a value given by the click of the user in the 'line' module it turns to black
+        # This gives the impression to the user that since the warning has now gone that they can now draw
+        # The warning would be: Please click a circle to begin
         reset_font = pygame.font.SysFont(None, 25)
         reset_text = reset_font.render("Please click a circle to begin", True, Main.Black)
         Main.screen.blit(reset_text,(350,605))
@@ -34,10 +38,11 @@ def grid_moving_circle(gridn_x, gridn_y, cctr_x, cctr_y, gridn):
     
     
 def pst():
-    pos = pygame.mouse.get_pos()
-    mouse_x = pos[0]
-    mouse_y = pos[1]
     
+    '''
+    Draws the smaller circles on the screen as the user enters that "box":
+    - These calls to the grid_moving circle function tell the program where exactly to draw the circle if the user has the left mouse button clicked when in that position
+    '''
     
     # First row:
     
