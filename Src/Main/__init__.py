@@ -289,7 +289,8 @@ def level_finished(situation, nextlevel, current_level):
             textpos = text.get_rect(centerx=background.get_width()/2)
             textpos.top = 210
             screen.blit(text, textpos)
-            button("Retry",50,400, 200, 100, DarkGreen, Green, 30, current_level)
+            # Making the retry button start the game over from level 1
+            button("Retry",50,400, 200, 100, DarkGreen, Green, 30, "level 1")
             button("Quit game",350,400, 200, 100, DarkGrey, Grey, 30, "quit")
             
             
@@ -370,7 +371,7 @@ def instruction_menu():
             if event.type == pygame.QUIT:
                 pygame.quit()
         
-        screen.fill(Grey)
+        screen.fill(Yellow)
         text("Instructions", 300, 100, 70)
         text("The objective of flow is to connect all the circle pairs of the same colour, together:",300,200,15)
         text("- Click one of the circles to begin", 300, 250, 15)
@@ -378,7 +379,7 @@ def instruction_menu():
         text("- Once a link is complete, the link colour will light up at the bottom of the screen", 300, 350, 15)
         text("- You have 15 seconds to complete the level", 300, 400, 15)
         text("- You have three resets available to you, which also reset the time!", 300, 450, 15)
-        text("- Enjoy yourself!", 300,500, 15)
+        text("- If you run out of time, you start all over again! Enjoy yourself!", 300,500, 15)
         
         button("Play", 50,600,200,100, DarkGreen, Green,30, "level 1")
         button("Quit",350,600,200,100, DarkRed, Red,30, "quit")
